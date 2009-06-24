@@ -25,8 +25,13 @@ Some other programs and packages to make it all work
 
 ==Client Side==
 
+  * [http://cocos2d.org/ cocos2d 0.3.0] A 2D graphics framework for Python for the user interface, it is built on top of Pyglet
+  * [http://pyglet.org/ 1.1.3] a cross-platform windowing and multimedia library for Python. Cocos2D is built on top of Pyglet
+  * [http://www.pygame.org/download.shtml pygame 1.8.1] Another graphics library for Python. The current Medianav proof of concept is built using pygame, but the plan is to replace it with Pyglet/Cocos2D
+  * [http://pylirc.mccabe.nu/ pyLirc] pyLirc is a module for Python that interacts with lirc to give Python programs the ability to receive commands from remote controls
+  * [http://www.mplayerhq.hu/design7/news.html mplayer] A cross platform media player that has native support for lirc and pretty much any video format.
   * [http://code.google.com/p/python-rest-client/ python-rest-client 0.2] A python REST client that provides the HTTP layer to get the model objects from the app server
-  * [http://pypi.python.org/pypi/python-json/ python-json] A python JSON encoder / decoder to convert the JSON object into a Python object
+  * [http://pypi.python.org/pypi/python-json/ python-json] A python JSON encoder / decoder to convert the JSON object into a Python object. Python 2.6 has built-in JSON support, but for now we are stuck with Python 2.5
 
 = References =
 
