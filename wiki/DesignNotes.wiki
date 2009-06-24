@@ -1,0 +1,33 @@
+#summary Design Notes
+
+= Introduction =
+
+A few design notes, mostly to myself.
+
+
+= Assumptions =
+
+  * Media must be mounted locally on both app server and playback client. Should not matter which method is used, could be NFS mounted in linux or drive mappings in Windows.
+
+= Program List =
+
+Some other programs and packages to make it all work
+
+==Common==
+
+  * [http://www.python.org/download/releases/2.5.4/ Python 2.5.4] - Python 2.5 was chosen because not many Linux distributions currently ship with anything higher. Python 2.6 should work, but no Python 2.6 specific functionality will used
+
+==Server Side==
+
+  * [http://www.djangoproject.com/download/ Django 1.02] Web application server. The latest official version as of now. Any 1.x release should work because Django's API has been made [http://code.djangoproject.com/wiki/BackwardsIncompatibleChanges stable up until 2.0]
+  * [http://south.aeracode.org/ South 0.5] Django schema migrations. I miss schema migrations from Rails, so lets give this a try
+  * [http://code.google.com/p/django-rest-interface/ django-rest-interface] A Django REST interface to models. To provide web services (JSON) to the clients.
+
+==Client Side==
+
+  * [http://code.google.com/p/python-rest-client/ python-rest-client 0.2] A python REST client that provides the HTTP layer to get the model objects from the app server
+  * [http://pypi.python.org/pypi/python-json/ python-json] A python JSON encoder / decoder to convert the JSON object into a Python object
+
+= References =
+
+A question I asked on Stack Overflow regarding the architecture to get access to the models in Django from the client: http://stackoverflow.com/questions/1037376/remote-access-to-django-orm
