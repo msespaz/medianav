@@ -22,6 +22,7 @@ Some other programs and packages to make it all work
   * [http://www.djangoproject.com/download/ Django 1.02] Web application server. The latest official version as of now. Any 1.x release should work because Django's API has been made [http://code.djangoproject.com/wiki/BackwardsIncompatibleChanges stable up until 2.0]
   * [http://south.aeracode.org/ South 0.5] Django schema migrations. I miss schema migrations from Rails, so lets give this a try
   * [http://code.google.com/p/django-rest-interface/ django-rest-interface] A Django REST interface to models. To provide web services (JSON) to the clients.
+  * [http://loopj.com/2009/05/06/python-api-for-thetvdbcom/ python-api-for-thetvdbcom] To get TV show information from thetvdb.com
 
 ==Client Side==
 
