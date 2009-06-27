@@ -4,10 +4,21 @@
 
 A few design notes, mostly to myself.
 
+= Overview =
+
+Medianav consists of three parts:
+
+  * A fileserver containing the actual media files (TV shows, Movies, etc)
+  * An application server running Django to manage your media collection and provide web services
+  * A python front-end that can play the media built on top of mplayer and uses web services to get meta information from the app server 
+
+All three components can run on separate servers or be combined. Multiple front-ends can also be used. 
+
 
 = Assumptions =
 
   * Media must be mounted locally on both app server and playback client. Should not matter which method is used, could be NFS mounted in linux or drive mappings in Windows.
+  * Front end can run mplayer and OpenGL (for Pyglet)
 
 = Program List =
 
