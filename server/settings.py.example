@@ -73,6 +73,10 @@ TEMPLATE_DIRS = (
 
 TVDBAPI_KEY = '56D74E6CD39856E0'
 
+# Change the following paths to match your own installation
+# The path to your TV related media (banners, posters, fanart, etc). This must be an absolute path
+MEDIANAV_TV_MEDIA = '/opt/medianav/server/tv/media';
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
