@@ -45,8 +45,8 @@ Some other programs and packages to make it all work
   * [http://pylirc.mccabe.nu/ pyLirc] pyLirc is a module for Python that interacts with lirc to give Python programs the ability to receive commands from remote controls
   * [http://www.mplayerhq.hu/design7/news.html mplayer] A cross platform media player that has native support for lirc and pretty much any video format.
   * [http://code.google.com/p/python-rest-client/ python-rest-client 0.2] A python REST client that provides the HTTP layer to get the model objects from the app server
-  * [http://pypi.python.org/pypi/python-json/ python-json] A python JSON encoder / decoder to convert the JSON object into a Python object. Python 2.6 has built-in JSON support, but for now we are stuck with Python 2.5
-  * [http://code.google.com/p/simplejson/ simlejson] A Python 2.4 and 2.5 compatible JSON parser
+  * [http://code.google.com/p/simplejson/ simplejson] A Python 2.4 and 2.5 compatible JSON parser
+  * [http://pymt.txzone.net/docs/api/api-pymt.loader.html PyMT Loader Module] Part of the Python Multi touch UI toolkit, provides an asynchronous loader for images and sprites.
 
 = References =
 
