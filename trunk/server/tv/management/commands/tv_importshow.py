@@ -39,15 +39,15 @@ class Command(LabelCommand):
             show.tvdb_last_updated = tvdbshow.last_updated
             show.save()
             # Download the images for the show
-            filename = "/home/andre/projects/medianav/server/medianav/tv/media/img/banner/%d.jpg" % show.tvdb_showid
+            filename = "%s/img/banner/%d.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
             if not os.access(filename, os.F_OK):
                 print "Downloading banner image"
                 urllib.urlretrieve(show.tvdb_banner_url, filename)
-            filename = "/home/andre/projects/medianav/server/medianav/tv/media/img/poster/%d.jpg" % show.tvdb_showid
+            filename = "%s/img/poster/%d.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
             if not os.access(filename, os.F_OK):
                 print "Downloading poster image"
                 urllib.urlretrieve(show.tvdb_poster_url, filename)
-            filename = "/home/andre/projects/medianav/server/medianav/tv/media/img/fanart/%d.jpg" % show.tvdb_showid
+            filename = "%s/img/fanart/%d.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
             if not os.access(filename, os.F_OK):
                 print "Downloading fanart image"
                 urllib.urlretrieve(show.tvdb_fanart_url, filename)
