@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ show.name }}{% endblock %}
+
+{% block content %}
+<div class="box">
+    <img width="758" height="140" src="/tv/media/img/banner/{{ show.tvdb_showid }}.jpg">
+</div>
+<div class="container">
+<div class="span-6">
+    <div class="box">
+        <img width="170" height="250" src="/tv/media/img/poster/thumb.170.{{ show.tvdb_showid }}.jpg">
+    </div>
+</div>
+<div class="span-14 last">
+    <h2>{{ show.name }}</h2>
+    <p>{{ show.overview }}</p>
+</div>
+</div>
+<h3>Episode List</h3>
+<table>
+{% for episode in show.episode_set.all %}
+    <tr class="{% cycle "odd" "even" %}">
+        <td><a href="{{ episode.newzbin_url }}"><img width="15" height="15" src="/tv/media/img/logo/newzbin18.png"></a></td>
+        <td>{{ episode.season_number }}x{{ episode.episode_number }}</td>
+        <td>{{ episode.first_aired }}</td>
+        <td><a href="{% url tv.views.episode_detail episode_id=episode.id %}">{{ episode.name }}</a></td>
+        <td>
+            {% for videofile in episode.videofile_set.all %}
+            <small>{{ videofile.name }}</small>
+            {% endfor %}
+        </td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}
