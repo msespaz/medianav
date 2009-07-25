@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ episode.show.name }} - {{ episode.season_number }}x{{ episode.episode_number }} - {{ episode.name }}{% endblock %}
+
+{% block content %}
+<h2>{{ episode.show.name }} - {{ episode.season_number }}x{{ episode.episode_number }} - {{ episode.name }}</h2>
+<div class="box">
+    {% if episode.tvdb_image %}
+    <img src="http://images.thetvdb.com/banners/{{ episode.tvdb_image }}">
+    {% else %}
+    <p>(No Image)</p>
+    {% endif %}
+</div>
+<p>{{ episode.overview }}</p>
+
+<table>
+{% for videofile in episode.videofile_set.all %}
+    <tr class="{% cycle "odd" "even" %}">
+        <td><small>{{ videofile.name }}</small></td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

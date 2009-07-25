@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Missing Episodes{% endblock %}
+
+{% block content %}
+<h2>Missing Episodes</h2>
+<table>
+{% for episode in episodes %}
+    <tr class="{{ episode.air_status }} {% cycle "odd" "even" %}">
+        <td><a href="{{ episode.newzbin_url }}"><img width="15" height="15" src="/tv/media/img/logo/newzbin18.png"></a></td>
+        <!-- <td><a href="{{ episode.newzbin_url }}">NZB</a></td> -->
+        <td><a href="{% url tv.views.show_detail show_id=episode.show.id %}">{{ episode.show.name }}</a></td>
+        <td>{{ episode.season_number }}x{{ episode.episode_number }}</td>
+        <td>{{ episode.first_aired }}</td>
+        <td><a href="{% url tv.views.episode_detail episode_id=episode.id %}">{{ episode.name }}</a></td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

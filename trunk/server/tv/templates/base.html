@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <title>MediaNav | {% block title %}Media Management{% endblock %}</title>
+    <link rel="stylesheet" href="/tv/media/css/blueprint/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/tv/media/css/blueprint/print.css" type="text/css" media="print">    
+    <!--[if lt IE 8]><link rel="stylesheet" href="/tv/media/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="/tv/media/css/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="/tv/media/css/medianav.css" type="text/css" media="screen, projection">
+</head>
+
+<body>
+    <div class="container">
+        <div id="header" class="span-24 last">
+            <h1>MediaNav</h1>
+        </div>
+        <div id="subheader" class="span-24 last">
+            <h3 class="alt">Manage your media</h3>
+        </div>
+        <hr />
+        <div class="span-4" id="sidebar">
+            <div id="navigation">
+                <h3 class="caps">Navigation</h3>
+                <div class="box">
+                    <ul>
+                        <li><a href="{% url tv.views.shows_list %}">All Shows</a></li>
+                        <li><a href="{% url tv.views.missing_episodes %}">Missing Episodes</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="span-20 last" id="content">
+            {% block content %}{% endblock %}
+        </div>
+        <hr />
+    </div>
+</body>
+</html>

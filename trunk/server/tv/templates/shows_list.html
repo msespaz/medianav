@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Show Listing{% endblock %}
+
+{% block content %}
+<h2>Listing all shows</h2>
+<table>
+    <tr>
+        <th align=left>Name</th>
+        <th align=left>Genre</th>
+        <th align=left>Runtime</th>
+        <th align=left>Status</th>
+        <th align=left>First Aired</th>
+    </tr>
+{% for show in shows %}
+    <tr class="{% cycle 'odd' 'even' %}">
+        <td><a href="{% url tv.views.show_detail show_id=show.id %}">{{ show.name }}</a></td>
+        <td>{{ show.genre }}</td>
+        <td>{{ show.runtime }}</td>
+        <td>{{ show.status }}</td>
+        <td>{{ show.first_aired }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}
