@@ -39,36 +39,36 @@ class Command(LabelCommand):
             show.tvdb_last_updated = tvdbshow.last_updated
             show.save()
             # Download the images for the show
-            filename = "%s/img/banner/%d.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
+            filename = "%s/img/banner/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
             if not os.access(filename, os.F_OK):
-                print "Downloading banner image"
+                print "Downloading banner image to %s" % (filename)
                 urllib.urlretrieve(show.tvdb_banner_url, filename)
-            filename = "%s/img/poster/%d.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
+            filename = "%s/img/poster/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
             if not os.access(filename, os.F_OK):
-                print "Downloading poster image"
+                print "Downloading poster image to %s" % (filename)
                 urllib.urlretrieve(show.tvdb_poster_url, filename)
-            filename = "%s/img/fanart/%d.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
+            filename = "%s/img/fanart/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
             if not os.access(filename, os.F_OK):
-                print "Downloading fanart image"
+                print "Downloading fanart image to %s" % (filename)
                 urllib.urlretrieve(show.tvdb_fanart_url, filename)
             # Add / Update episodes from tvdb to medianav 
             for tvdbepisode in tvdbepisodes:
-                update = 0
-                update_fields = ""
+                #update = 0
+                #update_fields = ""
                 try:
                     print "Update: s%02de%02d %s" % (int(tvdbepisode.season_number), int(tvdbepisode.episode_number), tvdbepisode.name)
                     episode = Episode.objects.get(tvdb_episodeid=tvdbepisode.id)
                 except Episode.DoesNotExist:
                     episode = Episode(tvdb_episodeid=tvdbepisode.id)
                     print "Create: s%02de%02d %s" % (int(tvdbepisode.season_number), int(tvdbepisode.episode_number), tvdbepisode.name)
-                if episode.show != show:
-                    episode.show = show
-                    update = 1
-                    update_fields += " show"
-                if episode.name != tvdbepisode.name:
-                    episode.name = tvdbepisode.name
-                    update = 1
-                    update_fields += " name"
+                #if episode.show != show:
+                #    update = 1
+                #    update_fields += " show"
+                #if episode.name != tvdbepisode.name:
+                #    update = 1
+                #    update_fields += " name"
+                episode.name = tvdbepisode.name
+                episode.show = show
                 episode.overview = tvdbepisode.overview
                 episode.season_number = tvdbepisode.season_number
                 episode.episode_number = tvdbepisode.episode_number
@@ -83,8 +83,8 @@ class Command(LabelCommand):
                 episode.tvdb_image = tvdbepisode.image
                 episode.tvdb_last_updated = tvdbepisode.last_updated
                 episode.save()
-                if update:
-                    print "Update: s%02de%02d %s [%s]" % (int(tvdbepisode.season_number), int(tvdbepisode.episode_number), tvdbepisode.name, update_fields),
+                #if update:
+                #    print "Update: s%02de%02d %s [%s]" % (int(tvdbepisode.season_number), int(tvdbepisode.episode_number), tvdbepisode.name, update_fields),
             # Remove any episodes that are no longer in tvdb list
             for episode in show.episode_set.all():
                 if episode.tvdb_episodeid not in (int(e.id) for e in tvdbepisodes):
