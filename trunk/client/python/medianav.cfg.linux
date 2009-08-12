@@ -1,0 +1,16 @@
+[Commands]
+mplayer = mplayer -fs "%s"
+
+[Directories]
+filebrowser = /data
+tv = /data/tv
+
+[Options]
+lirc = true
+videoext = avi,mpg,mpeg,mov,ogg,wmv,mkv,iso
+server = http://medianav:8000/
+
+[Display]
+width = 1920
+height = 1080
+background = images/background.jpg

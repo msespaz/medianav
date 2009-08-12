@@ -1,0 +1,15 @@
+[Commands]
+mplayer = c:/"Program Files (x86)/MPlayer for Windows/mplayer" -vo direct3d "%s" 
+[Directories]
+filebrowser = T:/
+tv = T:/
+
+[Options]
+lirc = false
+videoext = avi,mpg,mpeg,mov,ogg,wmv,mkv,iso
+server = http://medianav:8000/
+
+[Display]
+width = 800
+height = 600
+background = images/background.jpg
