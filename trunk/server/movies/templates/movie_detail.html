@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class="span-6">
+    <div class="box">
+        <img width="170" height="250" src="/movies/media/img/poster/{{ movie.moviedb_id }}.jpg">
+    </div>
+</div>
+<div class="span-14 last">
+    <h2>{{ movie.name }}</h2>
+    <b>Genre:</b>
+    {% for genre in movie.genres.all %}
+    <a href="{% url movies.views.genre_detail genre_id=genre.id %}"> {{ genre.name }}</a>
+    {% if not forloop.last %} |{% endif %}
+    {% endfor %}
+    <br>
+    <b>Studio:</b>
+    {% for studio in movie.studios.all %}
+    <a href="{% url movies.views.studio_detail studio_id=studio.id %}"> {{ studio.name }}</a>
+    {% if not forloop.last %} |{% endif %}
+    {% endfor %}
+    <br>
+    <b>Country:</b>
+    {% for country in movie.countries.all %}
+    <a href="{% url movies.views.country_detail country_id=country.id %}"> {{ country.name }}</a>
+    {% if not forloop.last %} |{% endif %}
+    {% endfor %}
+    <br>
+    <b>Overview:</b>{{ movie.overview }}
+    <br>
+    <table>
+        {% for member in cast %}
+        <tr>
+            <td>{{ member.job }}</td>
+            <td> <a href="{% url movies.views.person_detail person_id=member.person.id %}">{{ member.person.name }}</a></td>
+            <td>{{ member.character }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</div>
+<img width="480" height="270" src="/movies/media/img/backdrop/{{ movie.moviedb_id }}.jpg">
+{% endblock %}

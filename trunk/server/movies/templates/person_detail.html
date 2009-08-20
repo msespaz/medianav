@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Person {{ person.name }}{% endblock %}
+
+{% block content %}
+<h2>All roles by {{ person.name }}</h2>
+<table>
+    <tr>
+        <th align=left>Role</th>
+        <th align=left>Character</th>
+        <th align=left>Movie</th>
+        <th align=left>Released</th>
+    </tr>
+{% for member in cast %}
+    <tr class="{% cycle 'odd' 'even' %}">
+        <td>{{ member.job }}</td>
+        <td>{{ member.character }}</td>
+        <td><a href="{% url movies.views.movie_detail movie_id=member.movie.id %}">{{ member.movie.name }}</a></td>
+        <td>{{ member.movie.release }}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endblock %}

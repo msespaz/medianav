@@ -72,10 +72,15 @@ TEMPLATE_DIRS = (
 )
 
 TVDBAPI_KEY = '56D74E6CD39856E0'
+TMDBAPI_KEY = '825fa5f878fa024482c816d84d6431cd'
 
 # Change the following paths to match your own installation
 # The path to your TV related media (banners, posters, fanart, etc). This must be an absolute path
 MEDIANAV_TV_MEDIA = '/opt/medianav/server/tv/media';
+# The path to your Movid related media (posters, backdrops, etc)
+MEDIANAV_MOVIES_MEDIA = '/home/andre/projects/medianav/server/movies/media';
+
+MEDIA_EXTENSIONS = ['.avi', '.wmv', '.iso', '.mkv', '.ts', '.mpg']
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -84,4 +89,5 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'tv',
+    'movies',
 )

@@ -20,11 +20,17 @@
         <hr />
         <div class="span-4" id="sidebar">
             <div id="navigation">
-                <h3 class="caps">Navigation</h3>
+                <h3 class="caps">TV</h3>
                 <div class="box">
                     <ul>
                         <li><a href="{% url tv.views.shows_list %}">All Shows</a></li>
                         <li><a href="{% url tv.views.missing_episodes %}">Missing Episodes</a></li>
+                    </ul>
+                </div>
+                <h3 class="caps">Movies</h3>
+                <div class="box">
+                    <ul>
+                        <li><a href="{% url movies.views.movies_list %}">All Movies</a></li>
                     </ul>
                 </div>
             </div>
