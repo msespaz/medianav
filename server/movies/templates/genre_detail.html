@@ -11,8 +11,8 @@
     </tr>
 {% for movie in movies %}
     <tr class="{% cycle 'odd' 'even' %}">
-        <td><a href="{% url movies.views.movie_detail movie_id=movie.id %}">{{ movie.name }}</a></td>
-        <td>{{ movie.release }}</td>
+        <td><a href="{% url movies.views.movie_detail movie_id=movie.id %}">{{ movie.title }}</a></td>
+        <td>{{ movie.year }}</td>
     </tr>
 {% endfor %}
 </table>

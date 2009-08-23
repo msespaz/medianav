@@ -19,6 +19,7 @@
         </div>
         <hr />
         <div class="span-4" id="sidebar">
+            {% block sidebar %}
             <div id="navigation">
                 <h3 class="caps">TV</h3>
                 <div class="box">
@@ -34,6 +35,7 @@
                     </ul>
                 </div>
             </div>
+            {% endblock %}
         </div>
         <div class="span-20 last" id="content">
             {% block content %}{% endblock %}

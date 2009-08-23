@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ movie.name }}{% endblock %}
+{% block title %}{{ movie.title }}{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="span-14 last">
-    <h2>{{ movie.name }}</h2>
+    <h2>{{ movie.title }} ({{ movie.year }}) ({{ movie.imdb_kind }})</h2>
     <b>Genre:</b>
     {% for genre in movie.genres.all %}
     <a href="{% url movies.views.genre_detail genre_id=genre.id %}"> {{ genre.name }}</a>
@@ -18,8 +18,8 @@
     {% endfor %}
     <br>
     <b>Studio:</b>
-    {% for studio in movie.studios.all %}
-    <a href="{% url movies.views.studio_detail studio_id=studio.id %}"> {{ studio.name }}</a>
+    {% for company in movie.production_companies.all %}
+    <a href="{% url movies.views.company_detail company_id=company.id %}"> {{ company.name }}</a>
     {% if not forloop.last %} |{% endif %}
     {% endfor %}
     <br>
@@ -29,14 +29,26 @@
     {% if not forloop.last %} |{% endif %}
     {% endfor %}
     <br>
-    <b>Overview:</b>{{ movie.overview }}
+    <b>Overview:</b> {{ movie.plot_outline }}
     <br>
+    <b>Directors:</b> 
+        {% for member in directors %}
+        <a href="{% url movies.views.person_detail person_id=member.person.id %}">{{ member.person.name }}</a>
+        {% if not forloop.last %} |{% endif %}
+        {% endfor %}
+    <br>
+    <b>Writers:</b> 
+        {% for member in writers %}
+        <a href="{% url movies.views.person_detail person_id=member.person.id %}">{{ member.person.name }}</a>
+        {% if not forloop.last %} |{% endif %}
+        {% endfor %}
+    <br>
+    <b>Actors:</b>
     <table>
-        {% for member in cast %}
+        {% for member in actors %}
         <tr>
-            <td>{{ member.job }}</td>
             <td> <a href="{% url movies.views.person_detail person_id=member.person.id %}">{{ member.person.name }}</a></td>
-            <td>{{ member.character }}</td>
+            <td>{{ member.role }}</td>
         </tr>
         {% endfor %}
     </table>

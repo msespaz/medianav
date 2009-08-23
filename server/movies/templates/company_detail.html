@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Studio {{ studio.name }}{% endblock %}
+{% block title %}Production Company {{ company.name }}{% endblock %}
 
 {% block content %}
-<h2>All movies from studio {{ studio.name }}</h2>
+<h2>All movies from company {{ company.name }}</h2>
 <table>
     <tr>
         <th align=left>Name</th>
@@ -11,8 +11,8 @@
     </tr>
 {% for movie in movies %}
     <tr class="{% cycle 'odd' 'even' %}">
-        <td><a href="{% url movies.views.movie_detail movie_id=movie.id %}">{{ movie.name }}</a></td>
-        <td>{{ movie.release }}</td>
+        <td><a href="{% url movies.views.movie_detail movie_id=movie.id %}">{{ movie.title }}</a></td>
+        <td>{{ movie.year }}</td>
     </tr>
 {% endfor %}
 </table>
