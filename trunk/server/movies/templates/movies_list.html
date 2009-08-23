@@ -6,13 +6,20 @@
 <h2>Listing all movies</h2>
 <table>
     <tr>
-        <th align=left>Name</th>
-        <th align=left>Released</th>
+        <th align=left>Title</th>
+        <th align=left>Genre</th>
+        <th align=left>Year</th>
     </tr>
 {% for movie in movies %}
     <tr class="{% cycle 'odd' 'even' %}">
-        <td><a href="{% url movies.views.movie_detail movie_id=movie.id %}">{{ movie.name }}</a></td>
-        <td>{{ movie.release }}</td>
+        <td><a href="{% url movies.views.movie_detail movie_id=movie.id %}">{{ movie.title }}</a></td>
+        <td>{{ movie.imdb_kind|truncatewords:"1" }}</td>
+        <td>
+            {% for genre in movie.genres.all %}
+            {{ genre.name }}
+            {% endfor %}
+        </td>
+        <td>{{ movie.year }}</td>
     </tr>
 {% endfor %}
 </table>
