@@ -6,14 +6,12 @@ import config
 import urllib2
 import StringIO
 
-from restful_lib import Connection
 import simplejson
 
 def get_show_list():
     base_url = config.SERVER
-    conn = Connection(base_url)
-    result = conn.request_get("/tv/json/show/")
-    json_shows = simplejson.loads(result['body'])
+    result = urllib2.urlopen(base_url + '/tv/json/shows/').read()
+    json_shows = simplejson.loads(result)
     shows = []
     for json_show in json_shows:
         show = {}
@@ -27,9 +25,8 @@ def get_show_list():
 
 def get_episode_list(show_id):
     base_url = config.SERVER
-    conn = Connection(base_url)
-    result = conn.request_get("/tv/json/show/%d/episodes/" % show_id)
-    json_episodes = simplejson.loads(result['body'])
+    result = urllib2.urlopen(base_url + "/tv/json/show/%d/episodes/" % show_id).read()
+    json_episodes = simplejson.loads(result)
     episodes = []
     for json_episode in json_episodes:
         episode = {}
@@ -45,9 +42,8 @@ def get_episode_list(show_id):
 
 def get_videofile_list(episode_id):
     base_url = config.SERVER
-    conn = Connection(base_url)
-    result = conn.request_get("/tv/json/episode/%d/videofiles/" % episode_id)
-    json_result = simplejson.loads(result['body'])
+    result = urllib2.urlopen(base_url + "/tv/json/episode/%d/videofiles/" % episode_id).read()
+    json_result = simplejson.loads(result)
     result = []
     for entry in json_result:
         item = {}
@@ -149,7 +145,7 @@ class TVEpisodesPage(Page):
         if event.type == 'menu_hover':
             item = event.data[1]
             episode = item.data
-            self.infoblock.set_text(episode['first_aired'] + "\n" + episode['overview'])
+            self.infoblock.set_text('%s | %s ' % (episode['first_aired'], episode['overview']))
             # Try to update the episode image
             #try:
             #    episode_image = StringIO.StringIO(urllib2.urlopen(episode['image_url']).read())
