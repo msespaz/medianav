@@ -148,7 +148,7 @@ class Label(Widget):
         Widget.__init__(self, rect)
         self.text = text
         self.font_size = font_size
-        self.font = pygame.font.Font(None, self.font_size)
+        self.font = pygame.font.SysFont("arial", self.font_size)
         self.font_color = font_color
         self.rendered_label = None
         self.render_label()
@@ -170,7 +170,7 @@ class TextBlock(Widget):
         Widget.__init__(self, rect)
         self.text = text
         self.font_size = font_size
-        self.font = pygame.font.Font(None, self.font_size)
+        self.font = pygame.font.SysFont("arial", self.font_size)
         self.font_color = font_color
         self.background_color = background_color
         self.text_surface = pygame.Surface(self.rect.size, flags=pygame.SRCALPHA)
@@ -301,7 +301,7 @@ class Menu(Widget):
 
         self.items = [] 
         self.selected_item_number = selected_item_number 
-        self.font = pygame.font.Font(None, font_size)
+        self.font = pygame.font.SysFont("arial", font_size)
         
         self.default_color = default_color
         self.selected_color = selected_color
