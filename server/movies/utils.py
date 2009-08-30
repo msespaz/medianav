@@ -9,6 +9,7 @@ import stat
 import urllib
 import re
 from movies.imdb import IMDb
+from mediainfo import parse_info
 
 def scan_directory(directory):
     """ Scans a directory, adds it to the database with its files and associates it to a movie 
@@ -31,6 +32,7 @@ def scan_directory(directory):
     except VideoDirectory.DoesNotExist:
         print "Creating new directory in database"
         videodirectory = VideoDirectory(name=movie_dir)
+        videodirectory.save()
 
     # Update basic fields
     s=os.stat(directory)
@@ -60,6 +62,43 @@ def scan_directory(directory):
         if os.path.splitext(filename)[1].lower() in settings.MEDIA_EXTENSIONS:
             print '    Found media file [%s]' % filename
             videofilenames.append(filename)
+            try:
+                videofile = VideoFile.objects.get(directory = videodirectory, name = filename)
+            except VideoFile.DoesNotExist:
+                print '        Creating new file'
+                videofile = VideoFile(directory = videodirectory, name = filename)
+                videofile.save()
+            fullpath = os.path.join(directory, filename)
+            s=os.stat(fullpath)
+            videofile.ctime=datetime.datetime.fromtimestamp(s[stat.ST_CTIME])
+            videofile.file_size=s[stat.ST_SIZE]
+            videofile.last_updated = datetime.datetime.now()
+
+            mi = parse_info(fullpath)
+            videofile.audio_bitrate = mi['audio_bitrate']
+            videofile.audio_channels = mi['audio_channels']
+            videofile.audio_codec = mi['audio_codec']
+            videofile.audio_codec_id = mi['audio_codec_id']
+            videofile.audio_format = mi['audio_format']
+            videofile.audio_language = mi['audio_language']
+            videofile.audio_resolution = mi['audio_resolution']
+            videofile.audio_samplerate = mi['audio_samplerate']
+            videofile.general_bitrate = mi['general_bitrate']
+            videofile.general_codec = mi['general_codec']
+            videofile.general_duration = mi['general_duration']
+            videofile.general_format = mi['general_format']
+            videofile.general_size = mi['general_size']
+            videofile.video_bitrate = mi['video_bitrate']
+            videofile.video_codec = mi['video_codec']
+            videofile.video_codec_id = mi['video_codec_id']
+            videofile.video_displayaspect = mi['video_displayaspect']
+            videofile.video_pixelaspect = mi['video_pixelaspect']
+            videofile.video_format = mi['video_format']
+            videofile.video_width = mi['video_width']
+            videofile.video_height = mi['video_height']
+            videofile.video_scantype = mi['video_scantype']
+
+            videofile.save()
 
     # If there is an imdb, link it to a movie, or create a new one to link it to
     if imdbid:

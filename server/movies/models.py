@@ -1,5 +1,18 @@
 from django.db import models
 
+
+from django.db.models.fields import IntegerField
+from django.conf import settings
+
+# Custom big integer field
+class BigIntegerField(IntegerField):
+    empty_strings_allowed=False
+    def get_internal_type(self):
+        return "BigIntegerField"
+                        
+    def db_type(self):
+        return 'NUMBER(19)' if settings.DATABASE_ENGINE == 'oracle' else 'bigint'
+
 # Create your models here.
 
 class MovieStatus(models.Model):
@@ -98,7 +111,7 @@ class Movie(models.Model):
         ordering = ['title']
 
     def __unicode__(self):
-        return self.name
+        return '%s (%s)' % (self.title, self.year)
 
 
 class VideoFormat(models.Model):
@@ -111,6 +124,12 @@ class VideoDirectory(models.Model):
     movie = models.ForeignKey(Movie, blank=True, null=True)
     last_updated = models.DateTimeField(blank=True, null=True)
     ctime = models.DateTimeField(blank=True, null=True)
+    
+    class Meta:
+        ordering = ['name']
+    
+    def __unicode__(self):
+        return '%s' % (self.name)
 
 class VideoFile(models.Model):
     name = models.CharField(max_length=1024, blank=True)
@@ -118,5 +137,34 @@ class VideoFile(models.Model):
     directory = models.ForeignKey(VideoDirectory, blank=True, null=True)
     ctime = models.DateTimeField(blank=True, null=True)
     last_updated = models.DateTimeField(blank=True, null=True)
-    size = models.Field(blank=True, null=True)
+    file_size = BigIntegerField(blank=True, null=True)
+    # Media Info fields
+    audio_bitrate = BigIntegerField(blank=True, null=True)
+    audio_channels = models.IntegerField(blank=True, null=True)
+    audio_codec = models.CharField(max_length=32, blank=True)
+    audio_codec_id = models.CharField(max_length=32, blank=True)
+    audio_format = models.CharField(max_length=32, blank=True)
+    audio_language = models.CharField(max_length=32, blank=True)
+    audio_resolution = models.IntegerField(blank=True, null=True)
+    audio_samplerate = models.IntegerField(blank=True, null=True)
+    general_bitrate = BigIntegerField(blank=True, null=True)
+    general_codec = models.CharField(max_length=32, blank=True)
+    general_duration = models.IntegerField(blank=True, null=True)
+    general_format = models.CharField(max_length=32, blank=True)
+    general_size = BigIntegerField(blank=True, null=True)
+    video_bitrate = BigIntegerField(blank=True, null=True)
+    video_codec = models.CharField(max_length=32, blank=True)
+    video_codec_id = models.CharField(max_length=32, blank=True)
+    video_displayaspect = models.FloatField(blank=True, null=True)
+    video_pixelaspect = models.FloatField(blank=True, null=True)
+    video_format = models.CharField(max_length=32, blank=True)
+    video_width = models.IntegerField(blank=True, null=True)
+    video_height = models.IntegerField(blank=True, null=True)
+    video_scantype = models.CharField(max_length=32, blank=True)
+
+    class Meta:
+        ordering = ['name']
+    
+    def __unicode__(self):
+        return '%s' % (self.name)
 
