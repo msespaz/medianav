@@ -12,6 +12,7 @@ HEIGHT = config.getint('Display', 'height')
 FILEBROWSER_PATH = config.get('Directories', 'filebrowser')
 BACKGROUND = config.get('Display', 'background')
 TV_PATH = config.get('Directories', 'tv')
+MOVIE_PATH = config.get('Directories', 'movies')
 SERVER = config.get('Options', 'server')
 
 # Check if should use pylirc
