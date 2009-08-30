@@ -57,7 +57,7 @@ class TVPage(Page):
         Page.__init__(self, app, parent, color)
         self.title = Title(Rect(self.screen_width/2,10,100,100), 'TV Shows')
         self.add_widget(self.title)
-        self.show_menu = Menu(Rect(self.screen_width/8, self.screen_height/8, self.screen_width/2, self.screen_height/1.5), font_size=40)
+        self.show_menu = Menu(Rect(self.screen_width/8, self.screen_height/8, self.screen_width/2, self.screen_height/1.5), font_size=37)
         self.add_widget(self.show_menu, is_event_listener=True, is_event_dispatcher=True)
 
         self.load_shows()

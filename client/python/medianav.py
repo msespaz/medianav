@@ -2,6 +2,7 @@
 
 from components import *
 from tv import TVPage, TVEpisodesPage
+from movies import MoviesPage, MovieDetailPage
 from pygame import Rect
 from random import randrange
 from utils import *
@@ -101,8 +102,8 @@ class MyApp(App):
         self.screensaver_page = ScreenSaverClock(self)
         
         # TV shows
-        self.tv_page = TVPage(self)
-        decorate_page(self.tv_page)
+        self.tv_page = None
+        self.movies_page = None
 
         self.set_page(self.main_page)
 
@@ -117,11 +118,15 @@ class MyApp(App):
         # Page navigation for the main page
         if event.type == 'page_forward':
             if event.data == 'TV Shows':
+                self.tv_page = TVPage(self)
+                decorate_page(self.tv_page)
                 self.page_forward(self.tv_page)
             if event.data == 'File Browser':
                 self.page_forward(self.filebrowser_page)
             if event.data == 'Movies':
-                print "Page change to Movies"
+                self.movies_page = MoviesPage(self)
+                decorate_page(self.movies_page)
+                self.page_forward(self.movies_page)
             if event.data == 'Screen Saver':
                 print self.screensaver_page
                 print self.current_page
@@ -134,6 +139,12 @@ class MyApp(App):
             tv_episodes_page = TVEpisodesPage(self, show)
             decorate_page(tv_episodes_page)
             self.page_forward(tv_episodes_page)
+        if event.type == 'page_movie':
+            movie = event.data
+            print "Changing movie to", movie
+            movie_detail_page = MovieDetailPage(self, movie)
+            decorate_page(movie_detail_page)
+            self.page_forward(movie_detail_page)
         
 
 if __name__ == "__main__":
