@@ -3,6 +3,7 @@ mplayer = c:/"Program Files (x86)/MPlayer for Windows/mplayer" -vo direct3d "%s"
 [Directories]
 filebrowser = T:/
 tv = T:/
+movies = M:/
 
 [Options]
 lirc = false

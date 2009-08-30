@@ -4,6 +4,7 @@ mplayer = mplayer -fs "%s"
 [Directories]
 filebrowser = /data
 tv = /data/tv
+movies = /data/movies/all
 
 [Options]
 lirc = true
