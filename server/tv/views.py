@@ -26,14 +26,14 @@ def missing_episodes(request):
 def json_show_episodes(request, show_id):
     """ Returns a json result with a list of episodes for a particular show """
     episodes = Episode.objects.filter(show__id=show_id)
-    return HttpResponse(serializers.serialize('json', episodes), content_type='application/json')
+    return HttpResponse(serializers.serialize('json', episodes, fields=('tvdb_image','overview', 'episode_number', 'season_number', 'first_aired', 'name')), content_type='application/json')
 
 def json_shows_list(request):
     """ Returns a list of shows in json """
     shows = Show.objects.all()
-    return HttpResponse(serializers.serialize('json', shows), content_type='application/json')
+    return HttpResponse(serializers.serialize('json', shows, fields=('name', 'tvdb_showid')), content_type='application/json')
 
 def json_episode_videofiles(request, episode_id):
     """ Returns a json result with a list of episodes for a particular show """
     videofiles = VideoFile.objects.filter(episodes__id=episode_id)
-    return HttpResponse(serializers.serialize('json', videofiles), content_type='application/json')
+    return HttpResponse(serializers.serialize('json', videofiles, fields=('name')), content_type='application/json')
