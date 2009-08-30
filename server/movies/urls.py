@@ -9,4 +9,10 @@ urlpatterns = patterns('movies.views',
     (r'^company/(?P<company_id>\d+)/$', 'company_detail'),
     (r'^country/(?P<country_id>\d+)/$', 'country_detail'),
     (r'^media/(?P<path>.*)$', static.serve, {'document_root': 'movies/media', 'show_indexes': True}),
+
+    (r'^json/movie/(?P<movie_id>\d+)/$', 'json_movie_detail'),
+    (r'^json/movies/$', 'json_movies_list'),
+    (r'^json/genres/$', 'json_genre_list'),
+    (r'^json/movie/(?P<movie_id>\d+)/directories/$', 'json_movie_directories'),
+    (r'^json/directory/(?P<directory_id>\d+)/videofiles/$', 'json_directory_videofiles'),
 )

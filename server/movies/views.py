@@ -1,5 +1,7 @@
 # Create your views here.
 from django.shortcuts import render_to_response
+from django.http import HttpResponse
+from django.core import serializers
 from movies.models import *
 import datetime
 
@@ -37,3 +39,27 @@ def country_detail(request, country_id):
     movies = country.movie_set.all()
     return render_to_response('country_detail.html', {'country' : country, 'movies' : movies })
     return None
+
+def json_movies_list(request):
+    """ Returns a list of movies in json """
+    movies = Movie.objects.all()
+    return HttpResponse(serializers.serialize('json', movies, fields=('title', 'year', 'moviedb_id', 'genres')), content_type='application/json')
+
+def json_genre_list(request):
+    """ Returns a list of genres in json """
+    genres = Genre.objects.all()
+    return HttpResponse(serializers.serialize('json', genres, fields=('name')), content_type='application/json')
+
+def json_movie_directories(request, movie_id):
+    """ Returns a json result with a list of directories for a movie """
+    directories = VideoDirectory.objects.filter(movie__id=movie_id)
+    return HttpResponse(serializers.serialize('json', directories, fields=('name')), content_type='application/json')
+
+def json_directory_videofiles(request, directory_id):
+    """ Returns a json result with a list of episodes for a particular show """
+    videofiles = VideoFile.objects.filter(directory__id=directory_id)
+    return HttpResponse(serializers.serialize('json', videofiles, fields=('name')), content_type='application/json')
+
+def json_movie_detail(request, movie_id):
+    movie = Movie.objects.filter(pk=movie_id)
+    return HttpResponse(serializers.serialize('json', movie),  content_type='application/json')
