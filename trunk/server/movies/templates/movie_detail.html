@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load movies_extras %}
 
 {% block title %}{{ movie.title }}{% endblock %}
 
@@ -50,6 +51,24 @@
             <td> <a href="{% url movies.views.person_detail person_id=member.person.id %}">{{ member.person.name }}</a></td>
             <td>{{ member.role }}</td>
         </tr>
+        {% endfor %}
+    </table>
+    <b>Versions:</b>
+    <table> 
+        {% for directory in movie.videodirectory_set.all %}
+        <tr><td colspan=8>{{ directory.name }}</td></tr>
+            {% for file in directory.videofile_set.all %}
+            <tr>
+                <td>[{{ forloop.counter }}]</td>
+                <td>{{ file.file_size|bytes_to_string }}</td>
+                <td>{{ file.general_duration|msecs_to_string }}</td>
+                <td>{{ file.general_format }}</td>
+                <td>{{ file.video_format }}</td>
+                <td>{{ file.video_width }}x{{ file.video_height }}</td>
+                <td>{{ file.audio_format }}</td>
+                <td>{{ file.audio_channels }}</td>
+            </tr>
+            {% endfor %}
         {% endfor %}
     </table>
 </div>
