@@ -1,10 +1,6 @@
 from django.conf.urls.defaults import *
 from django.views import static
 
-from tv.models import Show
-from tv.models import Episode
-from tv.models import VideoFile
-
 urlpatterns = patterns('tv.views',
     (r'^$', 'shows_list'),
     (r'^show/(?P<show_id>\d+)/$', 'show_detail'),
