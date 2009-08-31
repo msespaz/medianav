@@ -151,7 +151,7 @@ class MovieDetailPage(Page):
             directory = item.data
             videofiles = get_videofile_list(directory['pk'])
             for videofile in videofiles:
-                filename = os.path.join(config.MOVIE_PATH, videofile['name'])
+                filename = os.path.join(config.MOVIE_PATH, directory['name'], videofile['name'])
                 print "Launching file ", filename
                 play_file(filename)
         if event.type == 'menu_hover':
