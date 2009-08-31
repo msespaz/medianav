@@ -19,7 +19,7 @@ All three components can run on separate servers or be combined. Multiple front-
 = Assumptions =
 
   * Media must be mounted locally on both app server and playback client. Should not matter which method is used, could be NFS mounted in linux or drive mappings in Windows.
-  * Front end can run mplayer and OpenGL (for Pyglet)
+  * Front end can run mplayer, Python and PyGame
 
 = Program List =
 
@@ -32,21 +32,21 @@ Some other programs and packages to make it all work
 ==Server Side==
 
   * [http://www.djangoproject.com/download/ Django 1.02] Web application server. The latest official version as of now. Any 1.x release should work because Django's API has been made [http://code.djangoproject.com/wiki/BackwardsIncompatibleChanges stable up until 2.0]
-  * [http://south.aeracode.org/ South 0.5] Django schema migrations. I miss schema migrations from Rails, so lets give this a try
-  * [http://code.google.com/p/django-rest-interface/ django-rest-interface] A Django REST interface to models. To provide web services (JSON) to the clients.
+  * ~~[http://south.aeracode.org/ South 0.5] Django schema migrations. I miss schema migrations from Rails, so lets give this a try~~ No longer used
+  * ~~[http://code.google.com/p/django-rest-interface/ django-rest-interface] A Django REST interface to models. To provide web services (JSON) to the clients.~~ No longer used
   * [http://loopj.com/2009/05/06/python-api-for-thetvdbcom/ python-api-for-thetvdbcom] To get TV show information from thetvdb.com
   * [http://search.cpan.org/~behanw/Video-Filename-0.35/lib/Video/Filename.pm Video::Filename 0.35] Perl module to parse filenames for information about the video. Could re-use some of the components and rewrite them in Python
 
 ==Client Side==
 
-  * [http://cocos2d.org/ cocos2d 0.3.0] A 2D graphics framework for Python for the user interface, it is built on top of Pyglet
-  * [http://pyglet.org/ Pyglet 1.1.3] a cross-platform windowing and multimedia library for Python. Cocos2D is built on top of Pyglet
-  * [http://www.pygame.org/download.shtml pygame 1.8.1] Another graphics library for Python. The current Medianav proof of concept is built using pygame, but the plan is to replace it with Pyglet/Cocos2D
+  * ~~[http://cocos2d.org/ cocos2d 0.3.0] A 2D graphics framework for Python for the user interface, it is built on top of Pyglet~~ Using PyGame instead
+  * ~~[http://pyglet.org/ Pyglet 1.1.3] a cross-platform windowing and multimedia library for Python. Cocos2D is built on top of Pyglet~~
+  * [http://www.pygame.org/download.shtml pygame 1.8.1] Another graphics library for Python. 
   * [http://pylirc.mccabe.nu/ pyLirc] pyLirc is a module for Python that interacts with lirc to give Python programs the ability to receive commands from remote controls
   * [http://www.mplayerhq.hu/design7/news.html mplayer] A cross platform media player that has native support for lirc and pretty much any video format.
-  * [http://code.google.com/p/python-rest-client/ python-rest-client 0.2] A python REST client that provides the HTTP layer to get the model objects from the app server
+  * ~~[http://code.google.com/p/python-rest-client/ python-rest-client 0.2] A python REST client that provides the HTTP layer to get the model objects from the app server~~ No longer used
   * [http://code.google.com/p/simplejson/ simplejson] A Python 2.4 and 2.5 compatible JSON parser
-  * [http://pymt.txzone.net/docs/api/api-pymt.loader.html PyMT Loader Module] Part of the Python Multi touch UI toolkit, provides an asynchronous loader for images and sprites.
+  * ~~[http://pymt.txzone.net/docs/api/api-pymt.loader.html PyMT Loader Module] Part of the Python Multi touch UI toolkit, provides an asynchronous loader for images and sprites.~~
 
 = References =
 
