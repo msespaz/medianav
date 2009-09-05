@@ -56,7 +56,7 @@
     <b>Versions:</b>
     <table> 
         {% for directory in movie.videodirectory_set.all %}
-        <tr><td colspan=8>{{ directory.name }}</td></tr>
+        <tr><td colspan=8>{{ directory.format_name }}</td></tr>
             {% for file in directory.videofile_set.all %}
             <tr>
                 <td>[{{ forloop.counter }}]</td>
