@@ -47,7 +47,7 @@ def scan_directory(directory):
             id = open(os.path.join(directory, filename), 'r').read().strip()
             print '    Found moviedb.imdb with id [%s]' % id
             imdbid = '%s' % id
-        if os.path.splitext(filename)[1].lower() == '.nfo':
+        if os.path.splitext(filename)[1].lower() in ('.nfo', '.txt'):
             nfo = open(os.path.join(directory, filename), 'r').read()
             p = re.compile('tt[0-9]+', re.MULTILINE)
             m = p.findall(nfo)
@@ -68,37 +68,38 @@ def scan_directory(directory):
                 print '        Creating new file'
                 videofile = VideoFile(directory = videodirectory, name = filename)
                 videofile.save()
-            fullpath = os.path.join(directory, filename)
-            s=os.stat(fullpath)
-            videofile.ctime=datetime.datetime.fromtimestamp(s[stat.ST_CTIME])
-            videofile.file_size=s[stat.ST_SIZE]
-            videofile.last_updated = datetime.datetime.now()
 
-            mi = parse_info(fullpath)
-            videofile.audio_bitrate = mi['audio_bitrate']
-            videofile.audio_channels = mi['audio_channels']
-            videofile.audio_codec = mi['audio_codec']
-            videofile.audio_codec_id = mi['audio_codec_id']
-            videofile.audio_format = mi['audio_format']
-            videofile.audio_language = mi['audio_language']
-            videofile.audio_resolution = mi['audio_resolution']
-            videofile.audio_samplerate = mi['audio_samplerate']
-            videofile.general_bitrate = mi['general_bitrate']
-            videofile.general_codec = mi['general_codec']
-            videofile.general_duration = mi['general_duration']
-            videofile.general_format = mi['general_format']
-            videofile.general_size = mi['general_size']
-            videofile.video_bitrate = mi['video_bitrate']
-            videofile.video_codec = mi['video_codec']
-            videofile.video_codec_id = mi['video_codec_id']
-            videofile.video_displayaspect = mi['video_displayaspect']
-            videofile.video_pixelaspect = mi['video_pixelaspect']
-            videofile.video_format = mi['video_format']
-            videofile.video_width = mi['video_width']
-            videofile.video_height = mi['video_height']
-            videofile.video_scantype = mi['video_scantype']
+                fullpath = os.path.join(directory, filename)
+                s=os.stat(fullpath)
+                videofile.ctime=datetime.datetime.fromtimestamp(s[stat.ST_CTIME])
+                videofile.file_size=s[stat.ST_SIZE]
+                videofile.last_updated = datetime.datetime.now()
 
-            videofile.save()
+                mi = parse_info(fullpath)
+                videofile.audio_bitrate = mi['audio_bitrate']
+                videofile.audio_channels = mi['audio_channels']
+                videofile.audio_codec = mi['audio_codec']
+                videofile.audio_codec_id = mi['audio_codec_id']
+                videofile.audio_format = mi['audio_format']
+                videofile.audio_language = mi['audio_language']
+                videofile.audio_resolution = mi['audio_resolution']
+                videofile.audio_samplerate = mi['audio_samplerate']
+                videofile.general_bitrate = mi['general_bitrate']
+                videofile.general_codec = mi['general_codec']
+                videofile.general_duration = mi['general_duration']
+                videofile.general_format = mi['general_format']
+                videofile.general_size = mi['general_size']
+                videofile.video_bitrate = mi['video_bitrate']
+                videofile.video_codec = mi['video_codec']
+                videofile.video_codec_id = mi['video_codec_id']
+                videofile.video_displayaspect = mi['video_displayaspect']
+                videofile.video_pixelaspect = mi['video_pixelaspect']
+                videofile.video_format = mi['video_format']
+                videofile.video_width = mi['video_width']
+                videofile.video_height = mi['video_height']
+                videofile.video_scantype = mi['video_scantype']
+
+                videofile.save()
 
     # If there is an imdb, link it to a movie, or create a new one to link it to
     if imdbid:

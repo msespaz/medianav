@@ -80,7 +80,7 @@ MEDIANAV_TV_MEDIA = '/opt/medianav/server/tv/media';
 # The path to your Movid related media (posters, backdrops, etc)
 MEDIANAV_MOVIES_MEDIA = '/home/andre/projects/medianav/server/movies/media';
 
-MEDIA_EXTENSIONS = ['.avi', '.wmv', '.iso', '.mkv', '.ts', '.mpg']
+MEDIA_EXTENSIONS = ['.avi', '.wmv', '.iso', '.mkv', '.ts', '.mpg', '.mp4', '.m2ts', '.vob', '.divx']
 
 INSTALLED_APPS = (
     'django.contrib.auth',
