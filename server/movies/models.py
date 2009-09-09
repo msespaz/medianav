@@ -23,6 +23,10 @@ class MovieStatus(models.Model):
 
 class Genre(models.Model):
     name = models.CharField(max_length=16, blank=True)
+
+    def short_name(self):
+        """ Returns a short name for the genre """
+        return self.name[:3]
     
     def __unicode__(self):
         return self.name
@@ -138,6 +142,7 @@ class VideoDirectory(models.Model):
     movie = models.ForeignKey(Movie, blank=True, null=True)
     last_updated = models.DateTimeField(blank=True, null=True)
     ctime = models.DateTimeField(blank=True, null=True)
+    date_added = models.DateTimeField(blank=True, null=True)
 
     def get_size(self):
         total_size = 0

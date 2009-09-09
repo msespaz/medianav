@@ -4,4 +4,23 @@
 
 {% block content %}
 <h2>Welcome to MediaNav</h2>
+<h3>Latest movies</h3>
+<table>
+    <tr>
+        <th align=left>Title</th>
+        <th align=left>Genre</th>
+        <th align=left>Added</th>
+    </tr>
+{% for dir in movies %}
+    <tr class="{% cycle 'odd' 'even' %}">
+        <td><a href="{% url movies.views.movie_detail movie_id=dir.movie.id %}">{{ dir.format_name }}</a></td>
+        <td>
+        {% for genre in dir.movie.genres.all %}
+        {{ genre.short_name }}
+        {% endfor %}
+        </td>
+        <td>{{ dir.date_added }}</td>
+    </tr>
+{% endfor %}
+</table>
 {% endblock %}
