@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import datetime
 
 # Create your models here.
@@ -24,6 +25,8 @@ class Show(models.Model):
     tvdb_poster_url = models.URLField(verify_exists=False, blank=True)
     tvdb_fanart_url = models.URLField(verify_exists=False, blank=True)
     tvdb_last_updated = models.DateTimeField(blank=True, null=True) 
+    # The users who has this show as favourite
+    fav_of = models.ManyToManyField(User)
 
     class Meta:
         ordering = ['name']
@@ -76,6 +79,8 @@ class Episode(models.Model):
     tvdb_rating = models.FloatField(blank=True, null=True)
     tvdb_image = models.URLField(verify_exists=False, blank=True)
     tvdb_last_updated = models.DateTimeField(blank=True, null=True) 
+    # Who has seen this episode
+    seen_by = models.ManyToManyField(User)
 
     def newzbin_url(self):
         # Returns a url to search for the episode on newzbin
