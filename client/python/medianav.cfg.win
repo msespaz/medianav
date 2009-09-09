@@ -8,7 +8,7 @@ movies = M:/
 [Options]
 lirc = false
 videoext = avi,mpg,mpeg,mov,ogg,wmv,mkv,iso
-server = http://medianav:8000/
+server = http://medianav/medianav/
 
 [Display]
 width = 800

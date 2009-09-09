@@ -10,14 +10,14 @@ import simplejson
 
 def get_show_list():
     base_url = config.SERVER
-    result = urllib2.urlopen(base_url + '/tv/json/shows/').read()
+    result = urllib2.urlopen(base_url + 'tv/json/shows/').read()
     json_shows = simplejson.loads(result)
     shows = []
     for json_show in json_shows:
         show = {}
-        show['banner_url'] = "%s/tv/media/img/banner/%s.jpg" % (config.SERVER, json_show['fields']['tvdb_showid'])
-        show['poster_url'] = "%s/tv/media/img/poster/%s.jpg" % (config.SERVER, json_show['fields']['tvdb_showid'])
-        show['fanart_url'] = "%s/tv/media/img/fanart/%s.jpg" % (config.SERVER, json_show['fields']['tvdb_showid'])
+        show['banner_url'] = "%smedia/img/tv/banner/%s.jpg" % (config.SERVER, json_show['fields']['tvdb_showid'])
+        show['poster_url'] = "%smedia/img/tv/poster/%s.jpg" % (config.SERVER, json_show['fields']['tvdb_showid'])
+        show['fanart_url'] = "%smedia/img/tv/fanart/%s.jpg" % (config.SERVER, json_show['fields']['tvdb_showid'])
         show['name'] = json_show['fields']['name']
         show['pk'] = json_show['pk']
         shows.append(show)
@@ -25,7 +25,7 @@ def get_show_list():
 
 def get_episode_list(show_id):
     base_url = config.SERVER
-    result = urllib2.urlopen(base_url + "/tv/json/show/%d/episodes/" % show_id).read()
+    result = urllib2.urlopen(base_url + "tv/json/show/%d/episodes/" % show_id).read()
     json_episodes = simplejson.loads(result)
     episodes = []
     for json_episode in json_episodes:
@@ -42,7 +42,7 @@ def get_episode_list(show_id):
 
 def get_videofile_list(episode_id):
     base_url = config.SERVER
-    result = urllib2.urlopen(base_url + "/tv/json/episode/%d/videofiles/" % episode_id).read()
+    result = urllib2.urlopen(base_url + "tv/json/episode/%d/videofiles/" % episode_id).read()
     json_result = simplejson.loads(result)
     result = []
     for entry in json_result:

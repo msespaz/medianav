@@ -9,7 +9,7 @@ movies = /data/movies/all
 [Options]
 lirc = true
 videoext = avi,mpg,mpeg,mov,ogg,wmv,mkv,iso
-server = http://medianav:8000/
+server = http://medianav/medianav/
 
 [Display]
 width = 1920
