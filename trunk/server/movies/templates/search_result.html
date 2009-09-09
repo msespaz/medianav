@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Search{% endblock %}
+
+{% block content %}
+<h2>Movie Search</h2>
+<h3>Movie Titles</h3>
+<table>
+    <tr>
+        <th align=left>Title</th>
+        <th align=left>Genre</th>
+        <th align=left>Year</th>
+    </tr>
+{% for movie in movies %}
+    <tr class="{% cycle 'odd' 'even' %}">
+        <td><a href="{% url movies.views.movie_detail movie_id=movie.id %}">{{ movie.title }}</a></td>
+        <td>{{ movie.imdb_kind|truncatewords:"1" }}</td>
+        <td>
+            {% for genre in movie.genres.all %}
+            {{ genre.name }}
+            {% endfor %}
+        </td>
+        <td>{{ movie.year }}</td>
+    </tr>
+{% endfor %}
+</table>
+<h3>People</h3>
+<table>
+    <tr>
+        <th align=left>Name</th>
+        <th align=left># Movies</th>
+    </tr>
+{% for member in people %}
+    <tr>
+        <td><a href="{% url movies.views.person_detail person_id=member.id %}">{{ member.name }}</a></td>
+        <td>{{ member.num_movies }}</td>
+    </tr>
+{% endfor %}
+<table>
+{% endblock %}
