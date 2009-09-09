@@ -4,12 +4,12 @@
 
 {% block content %}
 <div class="box">
-    <img width="758" height="140" src="/tv/media/img/banner/{{ show.tvdb_showid }}.jpg">
+    <img width="758" height="140" src="{{ MEDIA_URL }}img/tv/banner/{{ show.tvdb_showid }}.jpg">
 </div>
 <div class="container">
 <div class="span-6">
     <div class="box">
-        <img width="170" height="250" src="/tv/media/img/poster/{{ show.tvdb_showid }}.jpg">
+        <img width="170" height="250" src="{{ MEDIA_URL }}img/tv/poster/{{ show.tvdb_showid }}.jpg">
     </div>
 </div>
 <div class="span-14 last">
@@ -21,7 +21,7 @@
 <table>
 {% for episode in show.episode_set.all %}
     <tr class="{% cycle "odd" "even" %}">
-        <td><a href="{{ episode.newzbin_url }}"><img width="15" height="15" src="/tv/media/img/logo/newzbin18.png"></a></td>
+        <td><a href="{{ episode.newzbin_url }}"><img width="15" height="15" src="{{ MEDIA_URL }}img/tv/logo/newzbin18.png"></a></td>
         <td>{{ episode.season_number }}x{{ episode.episode_number }}</td>
         <td>{{ episode.first_aired }}</td>
         <td><a href="{% url tv.views.episode_detail episode_id=episode.id %}">{{ episode.name }}</a></td>

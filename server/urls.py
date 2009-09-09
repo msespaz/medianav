@@ -1,4 +1,6 @@
 from django.conf.urls.defaults import *
+# For serving static pages
+from django.views import static
 
 # Django authentication
 from django.contrib.auth.views import login, logout
@@ -13,16 +15,24 @@ urlpatterns = patterns('',
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^medianav/admin/doc/', include('django.contrib.admindocs.urls')),
     # Uncomment the next line to enable the admin:
-    (r'^admin/(.*)', admin.site.root),
+    (r'^medianav/admin/(.*)', admin.site.root),
 
     # Custom app views
-    (r'^/*tv/', include('tv.urls')),
-    (r'^/*movies/', include('movies.urls')),
+    (r'^medianav/tv/', include('tv.urls')),
+    (r'^medianav/movies/', include('movies.urls')),
 
     # Authentication views
-    (r'^accounts/login/$', login),
-    (r'^accounts/logout/$', logout),
-    (r'^accounts/profile/$', "tv.views.shows_list"),
+    (r'^medianav/accounts/login/$', login),
+    (r'^medianav/accounts/logout/$', logout),
+    (r'^medianav/accounts/profile/$', "tv.views.shows_list"),
+
+    # Media - This should not be served from django, but this is useful
+    # for a development server
+    (r'^medianav/media/(?P<path>.*)$', static.serve, {'document_root': 'media', 'show_indexes': True}),
+    
+    # Default page
+    (r'^medianav/', 'mnav.views.default'),
+
 )

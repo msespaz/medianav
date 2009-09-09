@@ -40,12 +40,12 @@ MEDIA_ROOT = ''
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/medianav/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/medianav/admin/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '10n0$%^ena$#%6FDH67sg%78sgja093j3^@^&SHjsjSH6792ja'
@@ -75,10 +75,10 @@ TVDBAPI_KEY = '56D74E6CD39856E0'
 TMDBAPI_KEY = '825fa5f878fa024482c816d84d6431cd'
 
 # Change the following paths to match your own installation
-# The path to your TV related media (banners, posters, fanart, etc). This must be an absolute path
-MEDIANAV_TV_MEDIA = '/opt/medianav/server/tv/media';
+# The path to your TV related media (banners, posters, fanart, etc)
+MEDIANAV_TV_MEDIA = '/opt/medianav/media/tv/';
 # The path to your Movid related media (posters, backdrops, etc)
-MEDIANAV_MOVIES_MEDIA = '/home/andre/projects/medianav/server/movies/media';
+MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/movies/';
 
 MEDIA_EXTENSIONS = ['.avi', '.wmv', '.iso', '.mkv', '.ts', '.mpg', '.mp4', '.m2ts', '.vob', '.divx']
 
@@ -89,6 +89,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.humanize',
+    'mnav',
     'tv',
     'movies',
 )

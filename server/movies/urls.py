@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import *
-from django.views import static
 
 urlpatterns = patterns('movies.views',
     (r'^$', 'movies_list'),
@@ -8,7 +7,6 @@ urlpatterns = patterns('movies.views',
     (r'^person/(?P<person_id>\d+)/$', 'person_detail'),
     (r'^company/(?P<company_id>\d+)/$', 'company_detail'),
     (r'^country/(?P<country_id>\d+)/$', 'country_detail'),
-    (r'^media/(?P<path>.*)$', static.serve, {'document_root': 'movies/media', 'show_indexes': True}),
 
     (r'^json/movie/(?P<movie_id>\d+)/$', 'json_movie_detail'),
     (r'^json/movies/$', 'json_movies_list'),
