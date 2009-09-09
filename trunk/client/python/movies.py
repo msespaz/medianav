@@ -10,7 +10,7 @@ import simplejson
 
 def get_genre_list():
     base_url = config.SERVER
-    html = urllib2.urlopen(base_url + '/movies/json/genres/').read()
+    html = urllib2.urlopen(base_url + 'movies/json/genres/').read()
     json = simplejson.loads(html)
     genres = {}
     for j in json:
@@ -19,13 +19,13 @@ def get_genre_list():
 
 def get_movie_list():
     base_url = config.SERVER
-    result = urllib2.urlopen(base_url + '/movies/json/movies/').read()
+    result = urllib2.urlopen(base_url + 'movies/json/movies/').read()
     json_movies = simplejson.loads(result)
     movies = []
     for json_movie in json_movies:
         movie = {}
-        movie['poster_url'] = "%s/movies/media/img/poster/%s.jpg" % (config.SERVER, json_movie['fields']['moviedb_id'])
-        movie['backdrop_url'] = "%s/movies/media/img/backdrop/%s.jpg" % (config.SERVER, json_movie['fields']['moviedb_id'])
+        movie['poster_url'] = "%smedia/img/movies/poster/%s.jpg" % (config.SERVER, json_movie['fields']['moviedb_id'])
+        movie['backdrop_url'] = "%smedia/img/movies/backdrop/%s.jpg" % (config.SERVER, json_movie['fields']['moviedb_id'])
         movie['title'] = json_movie['fields']['title']
         movie['year'] = json_movie['fields']['year']
         movie['genres'] = json_movie['fields']['genres']
@@ -35,17 +35,17 @@ def get_movie_list():
 
 def get_movie_detail(movie_id):
     base_url = config.SERVER
-    html = urllib2.urlopen(base_url + '/movies/json/movie/%s/' % movie_id).read()
+    html = urllib2.urlopen(base_url + 'movies/json/movie/%s/' % movie_id).read()
     json = simplejson.loads(html)
     movie = json[0]['fields']
     movie['pk'] = movie_id
-    movie['poster_url'] = "%s/movies/media/img/poster/%s.jpg" % (config.SERVER, movie['moviedb_id'])
-    movie['backdrop_url'] = "%s/movies/media/img/backdrop/%s.jpg" % (config.SERVER, movie['moviedb_id'])
+    movie['poster_url'] = "%smedia/img/movies/poster/%s.jpg" % (config.SERVER, movie['moviedb_id'])
+    movie['backdrop_url'] = "%smedia/img/movies/backdrop/%s.jpg" % (config.SERVER, movie['moviedb_id'])
     return movie
 
 def get_directory_list(movie_id):
     base_url = config.SERVER
-    result = urllib2.urlopen(base_url + "/movies/json/movie/%d/directories/" % movie_id).read()
+    result = urllib2.urlopen(base_url + "movies/json/movie/%d/directories/" % movie_id).read()
     json_directories = simplejson.loads(result)
     directories = []
     for json_directory in json_directories:
@@ -57,7 +57,7 @@ def get_directory_list(movie_id):
 
 def get_videofile_list(directory_id):
     base_url = config.SERVER
-    result = urllib2.urlopen(base_url + "/movies/json/directory/%d/videofiles/" % directory_id).read()
+    result = urllib2.urlopen(base_url + "movies/json/directory/%d/videofiles/" % directory_id).read()
     json_result = simplejson.loads(result)
     result = []
     for entry in json_result:
