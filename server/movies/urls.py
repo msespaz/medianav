@@ -2,6 +2,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('movies.views',
     (r'^$', 'movies_list'),
+    (r'^search/$', 'search'),
     (r'^movie/(?P<movie_id>\d+)/$', 'movie_detail'),
     (r'^genre/(?P<genre_id>\d+)/$', 'genre_detail'),
     (r'^person/(?P<person_id>\d+)/$', 'person_detail'),

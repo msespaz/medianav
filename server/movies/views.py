@@ -4,7 +4,17 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.core import serializers
 from movies.models import *
+from django.db.models import Count
 import datetime
+
+def search(request):
+    if 'q' in request.GET and request.GET['q']:
+        query = request.GET['q']
+        movies = Movie.objects.filter(title__icontains=query)
+        people = Person.objects.filter(name__icontains=query).annotate(num_movies=Count('movie')).order_by('-num_movies')
+    else:
+        query = 'No search criteria specified' 
+    return render_to_response('search_result.html', locals(), context_instance=RequestContext(request))
 
 def movies_list(request):
     movies = Movie.objects.all()
