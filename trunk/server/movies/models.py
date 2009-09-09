@@ -43,6 +43,10 @@ class Person(models.Model):
     name = models.CharField(max_length=256, blank=True)
     imdb_id = models.CharField(max_length=32, blank=True)
     
+    def imdb_link(self):
+        """ Returns a URL to the imdb page """
+        return 'http://www.imdb.com/name/nm%s/' % self.imdb_id
+    
     def __unicode__(self):
         return self.name
 
@@ -59,6 +63,10 @@ class Cast(models.Model):
 class Company(models.Model):
     name = models.CharField(max_length=256, blank=True)
     imdb_id = models.CharField(max_length=32, blank=True)
+    
+    def imdb_link(self):
+        """ Returns a URL to the imdb page """
+        return 'http://www.imdb.com/company/co%s/' % self.imdb_id
     
     def __unicode__(self):
         return self.name
@@ -108,6 +116,10 @@ class Movie(models.Model):
     moviedb_poster_url = models.URLField(verify_exists=False, blank=True)
     moviedb_backdrop_url = models.URLField(verify_exists=False, blank=True)
     moviedb_last_updated = models.DateField(blank=True, null=True)
+
+    def imdb_link(self):
+        """ Returns a URL to the imdb page """
+        return 'http://www.imdb.com/title/tt%s/' % self.imdb_id
 
     class Meta:
         ordering = ['title']

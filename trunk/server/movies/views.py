@@ -24,12 +24,12 @@ def genre_detail(request, genre_id):
 
 def person_detail(request, person_id):
     person = Person.objects.get(pk=person_id)
-    cast = Cast.objects.filter(person__id=person_id).order_by('movie__year')
+    cast = Cast.objects.filter(person__id=person_id).order_by('-movie__year')
     return render_to_response('person_detail.html', locals(), context_instance=RequestContext(request))
 
 def company_detail(request, company_id):
     company = Company.objects.get(pk=company_id)
-    movies = company.movie_set.all()
+    movies = company.movie_set.all().order_by('-year')
     return render_to_response('company_detail.html', locals(), context_instance=RequestContext(request))
 
 def country_detail(request, country_id):
