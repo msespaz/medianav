@@ -26,13 +26,12 @@ urlpatterns = patterns('',
     # Authentication views
     (r'^medianav/accounts/login/$', login),
     (r'^medianav/accounts/logout/$', logout),
-    (r'^medianav/accounts/profile/$', "tv.views.shows_list"),
 
     # Media - This should not be served from django, but this is useful
     # for a development server
     (r'^medianav/media/(?P<path>.*)$', static.serve, {'document_root': 'media', 'show_indexes': True}),
     
     # Default page
-    (r'^medianav/', 'mnav.views.default'),
+    (r'^medianav/', include('mnav.urls')),
 
 )
