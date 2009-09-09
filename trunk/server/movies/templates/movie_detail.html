@@ -7,11 +7,11 @@
 <div class="container">
 <div class="span-6">
     <div class="box">
-        <img width="170" height="250" src="/movies/media/img/poster/{{ movie.moviedb_id }}.jpg">
+        <img width="170" height="250" src="{{ MEDIA_URL }}img/movies/poster/{{ movie.moviedb_id }}.jpg">
     </div>
 </div>
 <div class="span-14 last">
-    <h2>{{ movie.title }} ({{ movie.year }}) ({{ movie.imdb_kind }})<a href="{{ movie.imdb_link }}"><img src="/movies/media/img/logo/imdb_icon.gif"></a></h2>
+    <h2>{
     <b>Genre:</b>
     {% for genre in movie.genres.all %}
     <a href="{% url movies.views.genre_detail genre_id=genre.id %}"> {{ genre.name }}</a>
@@ -73,5 +73,5 @@
     </table>
 </div>
 </div>
-<img width="480" height="270" src="/movies/media/img/backdrop/{{ movie.moviedb_id }}.jpg">
+<img width="480" height="270" src="{{ MEDIA_URL }}img/movies/backdrop/{{ movie.moviedb_id }}.jpg">
 {% endblock %}
