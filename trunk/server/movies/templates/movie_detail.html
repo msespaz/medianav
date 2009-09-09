@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="span-14 last">
-    <h2>{
+    <h2>{{ movie.title }} ({{ movie.year }}) ({{ movie.imdb_kind }})<a href="{{ movie.imdb_link }}"><img src="{{ MEDIA_URL }}img/movies/logo/imdb_icon.gif"></a></h2>
     <b>Genre:</b>
     {% for genre in movie.genres.all %}
     <a href="{% url movies.views.genre_detail genre_id=genre.id %}"> {{ genre.name }}</a>
