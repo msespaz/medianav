@@ -3,6 +3,18 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+from fnmatch import fnmatch
+class glob_list(list):
+    def __contains__(self, key):
+        for elt in self:
+            if fnmatch(key, elt): return True
+        return False
+
+INTERNAL_IPS = glob_list([
+    '127.0.0.1',
+    '192.168.2.*'
+])
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
@@ -76,9 +88,9 @@ TMDBAPI_KEY = '825fa5f878fa024482c816d84d6431cd'
 
 # Change the following paths to match your own installation
 # The path to your TV related media (banners, posters, fanart, etc)
-MEDIANAV_TV_MEDIA = '/opt/medianav/media/tv/';
+MEDIANAV_TV_MEDIA = '/opt/medianav/media/img/tv/';
 # The path to your Movid related media (posters, backdrops, etc)
-MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/movies/';
+MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/img/movies/';
 
 MEDIA_EXTENSIONS = ['.avi', '.wmv', '.iso', '.mkv', '.ts', '.mpg', '.mp4', '.m2ts', '.vob', '.divx']
 
