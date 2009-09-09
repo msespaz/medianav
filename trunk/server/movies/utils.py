@@ -32,6 +32,7 @@ def scan_directory(directory):
     except VideoDirectory.DoesNotExist:
         print "Creating new directory in database"
         videodirectory = VideoDirectory(name=movie_dir)
+        videodirectory.date_added = datetime.datetime.now()
         videodirectory.save()
 
     # Update basic fields
