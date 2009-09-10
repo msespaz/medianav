@@ -299,12 +299,12 @@ def import_tmdb(imdbid):
         movie.save()
         # Download imagees
         if movie.moviedb_poster_url:
-            filename = "%s/img/poster/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
+            filename = "%s/poster/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
             if not os.access(filename, os.F_OK):
                 print "Downloading poster image to %s" % (filename)
                 urllib.urlretrieve(movie.moviedb_poster_url, filename)
         if movie.moviedb_backdrop_url:
-            filename = "%s/img/backdrop/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
+            filename = "%s/backdrop/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
             if not os.access(filename, os.F_OK):
                 print "Downloading backdsrop image to %s" % (filename)
                 urllib.urlretrieve(movie.moviedb_backdrop_url, filename)
@@ -387,11 +387,11 @@ def import_tmdb_old(id):
         movie.countries.add(country)
     
     # Download images
-    filename = "%s/img/poster/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
+    filename = "%s/poster/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
     if not os.access(filename, os.F_OK):
         print "Downloading poster image to %s" % (filename)
         urllib.urlretrieve(movie.moviedb_poster_url, filename)
-    filename = "%s/img/backdrop/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
+    filename = "%s/backdrop/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
     if not os.access(filename, os.F_OK):
         print "Downloading backdsrop image to %s" % (filename)
         urllib.urlretrieve(movie.moviedb_backdrop_url, filename)
