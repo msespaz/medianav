@@ -46,8 +46,9 @@
                         <li><a href="{% url movies.views.movies_list %}">All Movies</a></li>
                     </ul>
                     <form action="{% url movies.views.search %}" method="get">
-                        <input type="text" name ="q">
-                        <input type="submit" value="Search">
+                        <input type="text" name ="q" />
+                        <input type="submit" value="Search" />
+                    </form>
                 </div>
             </div>
             {% endblock %}
