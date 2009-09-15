@@ -9,8 +9,9 @@ import StringIO
 import simplejson
 
 def get_show_list():
+    user = config.USER
     base_url = config.SERVER
-    result = urllib2.urlopen(base_url + 'tv/json/shows/').read()
+    result = urllib2.urlopen(base_url + 'tv/json/%s/shows/' % user).read()
     json_shows = simplejson.loads(result)
     shows = []
     for json_show in json_shows:
@@ -24,8 +25,9 @@ def get_show_list():
     return shows
 
 def get_episode_list(show_id):
+    user = config.USER
     base_url = config.SERVER
-    result = urllib2.urlopen(base_url + "tv/json/show/%d/episodes/" % show_id).read()
+    result = urllib2.urlopen(base_url + "tv/json/%s/show/%d/episodes/" % (user, show_id)).read()
     json_episodes = simplejson.loads(result)
     episodes = []
     for json_episode in json_episodes:
@@ -55,7 +57,7 @@ def get_videofile_list(episode_id):
 class TVPage(Page):
     def __init__(self, app, parent=None, color=(0, 0, 0)):
         Page.__init__(self, app, parent, color)
-        self.title = Title(Rect(self.screen_width/2,10,100,100), 'TV Shows')
+        self.title = Title(Rect(self.screen_width/2,10,100,100), 'TV Shows - %s' % config.USER)
         self.add_widget(self.title)
         self.show_menu = Menu(Rect(self.screen_width/8, self.screen_height/8, self.screen_width/2, self.screen_height/1.5), font_size=37)
         self.add_widget(self.show_menu, is_event_listener=True, is_event_dispatcher=True)
@@ -64,6 +66,7 @@ class TVPage(Page):
 
     def load_shows(self):
         """ Loads a list of shows into the menu """
+        self.show_menu.clear_items()
         for show in get_show_list():
             self.show_menu.add_item(MenuItem(show['name'], show))
         self.show_menu.select_item(0)
@@ -83,13 +86,18 @@ class TVPage(Page):
                 self.load_background(fanart)
             except:
                 self.load_background(config.BACKGROUND)
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_TAB:
+                config.cycle_user()
+                self.load_shows()
+                self.title.set_text('TV Shows - %s' % (config.USER))
 
 class TVEpisodesPage(Page):
     """ Shows a list of episodes for TV Show """
     def __init__(self, app, show, parent=None, color=(0, 0, 0)):
         Page.__init__(self, app, parent, color)
         self.show = show
-        self.title = Title(Rect(self.screen_width/2,10,100,100), 'TV Shows - %s' % show['name'])
+        self.title = Title(Rect(self.screen_width/2,10,100,100), 'TV Shows - %s - %s' % (config.USER, show['name']))
         self.add_widget(self.title)
 
         # Hardcoded positions for 1280x1090
@@ -122,6 +130,7 @@ class TVEpisodesPage(Page):
 
     def load_episodes(self):
         """ Loads a list of shows into the menu """
+        self.episode_menu.clear_items()
         for episode in get_episode_list(self.show['pk']):
             self.episode_menu.add_item(MenuItem(
                 "%d x %d : %s " % (
@@ -152,3 +161,8 @@ class TVEpisodesPage(Page):
             #    self.episode_image.load_image(episode_image)
             #except:
             #    self.episode_image.clear_image()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_TAB:
+                config.cycle_user()
+                self.load_episodes()
+                self.title.set_text('TV Shows - %s - %s' % (config.USER, self.show['name']))
