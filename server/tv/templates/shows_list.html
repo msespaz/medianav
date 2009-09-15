@@ -4,8 +4,10 @@
 
 {% block content %}
 <h2>Listing all shows</h2>
+<form method="post">
 <table>
     <tr>
+        <th align=left>Fav</th>
         <th align=left>Name</th>
         <th align=left>Genre</th>
         <th align=left>Runtime</th>
@@ -14,6 +16,7 @@
     </tr>
 {% for show in shows %}
     <tr class="{% cycle 'odd' 'even' %}">
+        <td><input type="checkbox" name="fav" value="{{show.id}}" {% if show.is_fav %}checked{% endif %} /></td>
         <td><a href="{% url tv.views.show_detail show_id=show.id %}">{{ show.name }}</a></td>
         <td>{{ show.genre }}</td>
         <td>{{ show.runtime }}</td>
@@ -22,4 +25,6 @@
     </tr>
 {% endfor %}
 </table>
+<input type="Submit" value="Update Favourites" />
+</form>
 {% endblock %}
