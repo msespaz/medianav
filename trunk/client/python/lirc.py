@@ -14,6 +14,7 @@ key_mapping = {
         'PGUP'   : pygame.K_PAGEUP,
         'SELECT' : pygame.K_RETURN,
         'BACK'   : pygame.K_BACKSPACE,
+        'LIVETV'   : pygame.K_TAB,
         }
 
 

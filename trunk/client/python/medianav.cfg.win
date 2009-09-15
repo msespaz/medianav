@@ -8,6 +8,7 @@ movies = M:/
 [Options]
 lirc = false
 videoext = avi,mpg,mpeg,mov,ogg,wmv,mkv,iso
+userlist = all,user1,user2
 server = http://medianav/medianav/
 
 [Display]
