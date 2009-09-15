@@ -345,7 +345,8 @@ class Menu(Widget):
             self.hover_time_count += dx
             if self.hover_time_count > self.hover_time:
                 self.hover_time_count = 0
-                self.dispatch_event(Event('menu_hover', (self.selected_item_number, self.items[self.selected_item_number])))
+                if len(self.items) > 0:
+                    self.dispatch_event(Event('menu_hover', (self.selected_item_number, self.items[self.selected_item_number])))
                 self.hover_sent = True
 
     def render_surface(self):
