@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from tv.models import Show, Episode, VideoFile
 from django.core import serializers
+from django.contrib.auth.models import User
 import datetime
 
 
@@ -61,14 +62,29 @@ def missing_episodes(request):
     episodes = Episode.objects.filter(season_number__gt=0, first_aired__gt=datetime.date.today()-datetime.timedelta(weeks=52), videofile__isnull=True).order_by('first_aired')
     return render_to_response('missing_episodes.html', locals(), context_instance=RequestContext(request))
 
-def json_show_episodes(request, show_id):
+def json_show_episodes(request, show_id, username='all'):
     """ Returns a json result with a list of episodes for a particular show """
-    episodes = Episode.objects.filter(show__id=show_id, videofile__isnull=False)
+    if username == 'all':
+        episodes = Episode.objects.filter(show__id=show_id, videofile__isnull=False).order_by('first_aired')
+    else:
+        user = User.objects.get(username=username)
+        episodes = Episode.objects.filter(show__id=show_id, videofile__isnull=False).exclude(seen_by=user).order_by('first_aired')
     return HttpResponse(serializers.serialize('json', episodes, fields=('tvdb_image','overview', 'episode_number', 'season_number', 'first_aired', 'name')), content_type='application/json')
 
-def json_shows_list(request):
+def json_shows_list(request, username='all'):
     """ Returns a list of shows in json """
-    shows = Show.objects.all()
+    if username == 'all':
+        shows = Show.objects.all()
+    else:
+        user = User.objects.get(username=username)
+        fav_shows = user.show_set.all()
+        unseen_list = []
+        for show in fav_shows:
+            number_unseen = show.episode_set.filter(videofile__isnull=False).exclude(seen_by=user).count()
+            if number_unseen > 0:
+                unseen_list.append(show.id)
+        shows = Show.objects.filter(id__in=unseen_list)
+
     return HttpResponse(serializers.serialize('json', shows, fields=('name', 'tvdb_showid')), content_type='application/json')
 
 def json_episode_videofiles(request, episode_id):
