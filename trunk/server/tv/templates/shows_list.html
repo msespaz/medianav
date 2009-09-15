@@ -2,10 +2,19 @@
 
 {% block title %}Show Listing{% endblock %}
 
+{% block jscript %}
+$(document).ready(function()
+    {
+        $("#showsTable").tablesorter();
+    }
+);
+{% endblock %}
+
 {% block content %}
-<h2>Listing all shows</h2>
+<h2>TV Shows</h2>
 <form method="post">
-<table>
+<table id="showsTable">
+    <thead>
     <tr>
         <th align=left>Fav</th>
         <th align=left>Name</th>
@@ -14,6 +23,8 @@
         <th align=left>Status</th>
         <th align=left>First Aired</th>
     </tr>
+    </thead>
+    <tbody>
 {% for show in shows %}
     <tr class="{% cycle 'odd' 'even' %}">
         <td><input type="checkbox" name="fav" value="{{show.id}}" {% if show.is_fav %}checked{% endif %} /></td>
@@ -24,6 +35,7 @@
         <td>{{ show.first_aired }}</td>
     </tr>
 {% endfor %}
+    </tbody>
 </table>
 <input type="Submit" value="Update Favourites" />
 </form>

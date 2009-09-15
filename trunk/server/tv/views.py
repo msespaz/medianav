@@ -31,7 +31,24 @@ def handle_shows_list(request, fav_only=False):
     return render_to_response('shows_list.html', locals(), context_instance=RequestContext(request))
 
 def show_detail(request, show_id):
+    # If this is a post, update the list of seen episodes 
+    if request.method == 'POST':
+        seen = []
+        for s in request.POST.getlist('seen'):
+            seen.append(Episode.objects.get(pk=s))
+        request.user.episode_set = seen
+
+    # Get show detail and list of episodes
     show = Show.objects.get(pk=show_id)
+    episodes = show.episode_set.all()
+
+    # Add watched flag to episode
+    for episode in episodes:
+        if request.user in episode.seen_by.all():
+            episode.seen = True
+        else:
+            episode.seen = False
+
     return render_to_response('show_detail.html', locals(), context_instance=RequestContext(request))
 
 def episode_detail(request, episode_id):

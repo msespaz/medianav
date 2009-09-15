@@ -2,6 +2,14 @@
 
 {% block title %}{{ show.name }}{% endblock %}
 
+{% block jscript %}
+$(document).ready(function() 
+    { 
+        $("#episodeTable").tablesorter(); 
+    } 
+); 
+{% endblock %}
+
 {% block content %}
 <div class="box">
     <img width="758" height="140" src="{{ MEDIA_URL }}img/tv/banner/{{ show.tvdb_showid }}.jpg">
@@ -18,9 +26,25 @@
 </div>
 </div>
 <h3>Episode List</h3>
-<table>
-{% for episode in show.episode_set.all %}
+<button onclick='$("#episodeForm").toggleCheckboxes();'>Toggle All</button>
+<button onclick='$("#episodeForm").checkCheckboxes();'>Check All</button>
+<button onclick='$("#episodeForm").unCheckCheckboxes();'>Uncheck All</button>
+<form id="episodeForm" method="post">
+<table id="episodeTable">
+    <thead>
+    <tr>
+        <th align=left>Seen</th>
+        <th align=left>NZB</th>
+        <th align=left>Ep#</th>
+        <th align=left>Airdate</th>
+        <th align=left>Name</th>
+        <th align=left>Filename</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for episode in episodes %}
     <tr class="{% cycle "odd" "even" %}">
+        <td><input type="checkbox" name="seen" value="{{episode.id}}" {% if episode.seen %}checked{% endif %} /></td>
         <td><a href="{{ episode.newzbin_url }}"><img width="15" height="15" src="{{ MEDIA_URL }}img/tv/logo/newzbin18.png"></a></td>
         <td>{{ episode.season_number }}x{{ episode.episode_number }}</td>
         <td>{{ episode.first_aired }}</td>
@@ -32,5 +56,8 @@
         </td>
     </tr>
 {% endfor %}
+    </tbody>
 </table>
+<input type="Submit" value="Update Watched Episodes" />
+</form>
 {% endblock %}
