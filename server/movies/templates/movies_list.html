@@ -2,14 +2,26 @@
 
 {% block title %}Movie Listing{% endblock %}
 
+{% block jscript %}
+$(document).ready(function()
+    {
+        $("#moviesTable").tablesorter();
+    }
+);
+{% endblock %}
+
 {% block content %}
 <h2>Listing all movies</h2>
-<table>
+<table id="moviesTable">
+    <thead>
     <tr>
         <th align=left>Title</th>
+        <th align=left>Type</th>
         <th align=left>Genre</th>
         <th align=left>Year</th>
     </tr>
+    </thead>
+    <tbody>
 {% for movie in movies %}
     <tr class="{% cycle 'odd' 'even' %}">
         <td><a href="{% url movies.views.movie_detail movie_id=movie.id %}">{{ movie.title }}</a></td>
@@ -22,5 +34,6 @@
         <td>{{ movie.year }}</td>
     </tr>
 {% endfor %}
+    </tbody>
 </table>
 {% endblock %}
