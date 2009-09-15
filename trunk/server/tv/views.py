@@ -6,8 +6,28 @@ from tv.models import Show, Episode, VideoFile
 from django.core import serializers
 import datetime
 
+
 def shows_list(request):
-    shows = Show.objects.all()
+    return handle_shows_list(request, False)
+
+def favourite_list(request):
+    return handle_shows_list(request, True)
+
+def handle_shows_list(request, fav_only=False):
+    if request.method == 'POST':
+        favs = []
+        for fav in request.POST.getlist('fav'):
+            favs.append(Show.objects.get(pk=fav))
+        request.user.show_set = favs
+    if fav_only:
+        shows = Show.objects.filter(fav_of=request.user)
+    else:
+        shows = Show.objects.all()
+    for show in shows:
+        if request.user in show.fav_of.all():
+            show.is_fav = True
+        else:
+            show.is_fav = False
     return render_to_response('shows_list.html', locals(), context_instance=RequestContext(request))
 
 def show_detail(request, show_id):
