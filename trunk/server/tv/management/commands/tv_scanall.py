@@ -12,6 +12,13 @@ TVDIR='/data/tv' # FIXME Get this information from the database
 class Command(NoArgsCommand):
     def handle(self, **options):
         verbose = False    
+        print "Scanning database"
+        for videofile in VideoFile.objects.all():
+            filename = os.path.join(TVDIR, videofile.name)
+            if not os.path.isfile(filename):
+                print "File not found: %s" % filename
+                videofile.delete()
+        print "Scanning filesystem"
         for dirname, dirnames, filenames in os.walk(TVDIR):
             for filename in filenames:
                 name=os.path.join(dirname, filename).replace(TVDIR,'',1)
