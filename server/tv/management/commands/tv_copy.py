@@ -17,8 +17,8 @@ class Command(LabelCommand):
             for episode in episodes:
                 videopath = episode.videofile_set.all()[0].name
                 videodir, videofile = os.path.split(videopath)
-                targetdirectory = os.path.join(TARGETPATH, videodir)
-                targetfile = os.path.join(TARGETPATH, videopath)
+                targetdirectory = os.path.join(TARGETPATH, username, videodir)
+                targetfile = os.path.join(TARGETPATH, username, videopath)
                 sourcefile = os.path.join(SOURCEPATH, videopath)
                 try:
                     os.makedirs(targetdirectory)
