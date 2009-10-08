@@ -71,6 +71,12 @@ def json_show_episodes(request, show_id, username='all'):
         episodes = Episode.objects.filter(show__id=show_id, videofile__isnull=False).exclude(seen_by=user).order_by('first_aired')
     return HttpResponse(serializers.serialize('json', episodes, fields=('tvdb_image','overview', 'episode_number', 'season_number', 'first_aired', 'name')), content_type='application/json')
 
+def json_episode_watched(request, username, episode_id):
+    user = User.objects.get(username=username)
+    episode = Episode.objects.get(pk=episode_id)
+    user.episode_set.add(episode)
+    return HttpResponse(serializers.serialize('json', [episode]), content_type='application/json')
+
 def json_shows_list(request, username='all'):
     """ Returns a list of shows in json """
     if username == 'all':
