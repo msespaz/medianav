@@ -9,4 +9,5 @@ urlpatterns = patterns('tv.views',
     (r'^json/(?P<username>\w+)/shows/$', 'json_shows_list'),
     (r'^json/(?P<username>\w+)/show/(?P<show_id>\d+)/episodes/$', 'json_show_episodes'),
     (r'^json/episode/(?P<episode_id>\d+)/videofiles/$', 'json_episode_videofiles'),
+    (r'^json/(?P<username>\w+)/episode/(?P<episode_id>\d+)/watched/$', 'json_episode_watched'),
 )
