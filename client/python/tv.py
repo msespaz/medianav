@@ -42,6 +42,12 @@ def get_episode_list(show_id):
         episodes.append(episode)
     return episodes
 
+def mark_watched(episode_id):
+    user = config.USER
+    base_url = config.SERVER
+    result = urllib2.urlopen(base_url + "tv/json/%s/episode/%s/watched/" % (user, episode_id)).read()
+    # We don't do anything with the result
+
 def get_videofile_list(episode_id):
     base_url = config.SERVER
     result = urllib2.urlopen(base_url + "tv/json/episode/%d/videofiles/" % episode_id).read()
@@ -147,6 +153,7 @@ class TVEpisodesPage(Page):
             item = event.data[1]
             episode = item.data
             videofiles = get_videofile_list(episode['pk'])
+            mark_watched(episode['pk'])
             for videofile in videofiles:
                 filename = os.path.join(config.TV_PATH, videofile['name'])
                 print "Launching file ", filename
