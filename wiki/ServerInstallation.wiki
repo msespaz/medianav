@@ -2,6 +2,8 @@
 
 = Introduction =
 
+STILL IN PROGRESS
+
 Steps to install MediaNav server
 
 apt-get install python-django (needs version 1.1), might need to download latest version from django website
