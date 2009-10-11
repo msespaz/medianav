@@ -1,0 +1,36 @@
+#summary How to install MediaNav server
+
+= Introduction =
+
+Steps to install MediaNav server
+
+apt-get install python-django (needs version 1.1), might need to download latest version from django website
+apt-get install python-mysqldb
+apt-get install mediainfo (might only be in PPA repository)
+https://launchpad.net/~shiki/+archive/mediainfo
+
+
+= Details =
+
+  * Configure your database
+  * If using mysql, you can do mysqladmin create medianav
+grant all privileges on medianav.* to 'medianav'@'localhost' identified by 'medianav';
+  * copy settings.py.example to settings.py Edit settings.py
+
+Change DATABASE_* settings
+
+Edit MEDIANAV_TV_MEDIA = '/opt/medianav/media/img/tv';
+MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/img/movies';
+
+Run python manage.py syncdb
+
+Create tables and user
+
+Ok, you can now test if the webserver works
+In another window, run python manage.py runserver 0.0.0.0:8000
+(assuming you have port 8000 free)
+Then open a browser to http://yourmachine:8000/medianav/
+And see if it opens a page
+
+python manage.py movie_scan_dir all
+python manage.py movie_imdb_assoc all
