@@ -104,7 +104,7 @@ class Movie(models.Model):
     genres = models.ManyToManyField(Genre)
     languages = models.ManyToManyField(Language)
     certificates = models.ManyToManyField(Certificate)
-    mpaa = models.CharField(max_length=128, blank=True)
+    mpaa = models.CharField(max_length=255, blank=True)
     production_companies = models.ManyToManyField(Company)
 
     status = models.ForeignKey(MovieStatus, blank=True, null=True)
