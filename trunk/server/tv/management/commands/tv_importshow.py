@@ -40,15 +40,15 @@ def import_show(show_id):
         show.tvdb_last_updated = tvdbshow.last_updated
         show.save()
         # Download the images for the show
-        filename = "%s/img/banner/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
+        filename = "%s/banner/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
         if not os.access(filename, os.F_OK):
             print "Downloading banner image to %s" % (filename)
             urllib.urlretrieve(show.tvdb_banner_url, filename)
-        filename = "%s/img/poster/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
+        filename = "%s/poster/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
         if not os.access(filename, os.F_OK):
             print "Downloading poster image to %s" % (filename)
             urllib.urlretrieve(show.tvdb_poster_url, filename)
-        filename = "%s/img/fanart/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
+        filename = "%s/fanart/%s.jpg" % (settings.MEDIANAV_TV_MEDIA, show.tvdb_showid)
         if not os.access(filename, os.F_OK):
             print "Downloading fanart image to %s" % (filename)
             urllib.urlretrieve(show.tvdb_fanart_url, filename)
