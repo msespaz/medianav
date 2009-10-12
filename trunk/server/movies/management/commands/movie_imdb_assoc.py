@@ -2,6 +2,7 @@ from django.core.management.base import LabelCommand
 from movies.utils import import_imdb, scan_directory
 from movies.models import Movie, VideoDirectory
 from movies.imdb import IMDb
+from django.conf import settings
 import os
 
 class Command(LabelCommand):
@@ -24,12 +25,12 @@ class Command(LabelCommand):
                 index = int(choice)
             print 'You chose %d' % index
             if index > -1:
-                filename = os.path.join('/data/movies/all', dir.name, 'moviedb.imdb')
+                filename = os.path.join(settings.MEDIANAV_MOVIE_DIR, dir.name, 'moviedb.imdb')
                 print 'Writing %s to %s ' % (s[index].movieID, filename)
                 f = open(filename, 'w')
                 f.write('%s' % s[index].movieID)
                 f.close()
-                scan_directory(os.path.join('/data/movies/all', dir.name))
+                scan_directory(os.path.join(settings.MEDIANAV_MOVIE_DIR, dir.name))
             else:
                 print 'Skipping'
 
