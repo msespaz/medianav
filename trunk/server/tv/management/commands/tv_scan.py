@@ -6,14 +6,13 @@ import os
 from tv.parsevideofile import parsevideofile
 from django.core.management.base import LabelCommand
 from tv.models import Show, Episode, VideoFile, AlternateShowName
-
-TVDIR='/data/tv' # FIXME Get this information from the database
+from django.conf import settings
 
 class Command(LabelCommand):
     def handle_label(self, label, **options):
         verbose = False
         filename = label
-        name = filename.replace(TVDIR,'',1)
+        name = filename.replace(settings.MEDIANAV_TV_DIR,'',1)
         name = name.lstrip(os.sep)
         parsed=parsevideofile(name)
         if parsed is None:

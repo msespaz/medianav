@@ -1,10 +1,11 @@
 from django.core.management.base import LabelCommand
 from tv.models import *
 from django.contrib.auth.models import User
+from django.conf import settings
 import os
 
-SOURCEPATH="/data/tv"
-TARGETPATH="/data/temp/copy_tv"
+SOURCEPATH=settings.MEDIANAV_TV_DIR
+TARGETPATH=settings.MEDIANAV_TV_COPY_DIR
 
 class Command(LabelCommand):
     def handle_label(self, label, **options):

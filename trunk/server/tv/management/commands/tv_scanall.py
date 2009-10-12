@@ -6,22 +6,21 @@ import os
 from tv.parsevideofile import parsevideofile
 from django.core.management.base import NoArgsCommand 
 from tv.models import Show, Episode, VideoFile, AlternateShowName
-
-TVDIR='/data/tv' # FIXME Get this information from the database
+from django.conf import settings
 
 class Command(NoArgsCommand):
     def handle(self, **options):
         verbose = False    
         print "Scanning database"
         for videofile in VideoFile.objects.all():
-            filename = os.path.join(TVDIR, videofile.name)
+            filename = os.path.join(settings.MEDIANAV_TV_DIR, videofile.name)
             if not os.path.isfile(filename):
                 print "File not found: %s" % filename
                 videofile.delete()
         print "Scanning filesystem"
-        for dirname, dirnames, filenames in os.walk(TVDIR):
+        for dirname, dirnames, filenames in os.walk(settings.MEDIANAV_TV_DIR):
             for filename in filenames:
-                name=os.path.join(dirname, filename).replace(TVDIR,'',1)
+                name=os.path.join(dirname, filename).replace(settings.MEDIANAV_TV_DIR,'',1)
                 name = name.lstrip(os.sep)
                 parsed=parsevideofile(name)
                 if parsed is None:
