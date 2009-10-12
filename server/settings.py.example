@@ -45,6 +45,10 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = True
 
+# Login URLS
+LOGIN_URL = '/medianav/accounts/login/'
+LOGIN_REDIRECT_URL = '/medianav/'
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = ''
@@ -87,10 +91,17 @@ TVDBAPI_KEY = '56D74E6CD39856E0'
 TMDBAPI_KEY = '825fa5f878fa024482c816d84d6431cd'
 
 # Change the following paths to match your own installation
-# The path to your TV related media (banners, posters, fanart, etc)
+#
+# The path to your TV related images (banners, posters, fanart, etc)
 MEDIANAV_TV_MEDIA = '/opt/medianav/media/img/tv/';
-# The path to your Movid related media (posters, backdrops, etc)
+# The path to your Movie related images (posters, backdrops, etc)
 MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/img/movies/';
+# The path to where your tv files are
+MEDIANAV_TV_DIR = '/data/tv'
+# The path to where your movie files are
+MEDIANAV_MOVIE_DIR = '/data/movies/all'
+# The path for the copy_tv feature - only used for the tv_copy command
+MEDIANAV_TV_COPY_DIR = '/data/temp/copy_tv'
 
 MEDIA_EXTENSIONS = ['.avi', '.wmv', '.iso', '.mkv', '.ts', '.mpg', '.mp4', '.m2ts', '.vob', '.divx']
 
