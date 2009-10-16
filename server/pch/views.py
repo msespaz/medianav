@@ -15,20 +15,17 @@ def popcornhour_all(request, page_number):
     movies_list = movies.models.Movie.objects.all()[start_movie:end_movie]
     total_movies =  movies.models.Movie.objects.all().count()
     focus = movies_list[0].pk
-    print focus
     total_pages = total_movies / movies_per_page
     if total_movies % movies_per_page != 0:
         total_pages = total_pages + 1
     prev_page = int(page_number) - 1
     next_page = int(page_number) + 1
-    link_up = 'Up'
-    link_down = 'Down'
     if prev_page < 1:
         prev_page = 1
-        link_up = ''
+	is_first_page = 1
     if next_page > total_pages:
         next_page = total_pages
-        link_down = ''
+        is_last_page = 1
     return render_to_response('pch_all.html', locals(), context_instance=RequestContext(request))
 
 def popcornhour_detail(request, movie_id):
