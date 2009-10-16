@@ -1,0 +1,23 @@
+#summary Sample Apache configuration for using MediaNav with mod_python
+
+= Introduction =
+
+Use this in your VirtualHost section to configure MediaNav to run under mod_python
+
+
+= Details =
+{{{
+
+    <Location "/medianav">
+        SetHandler python-program
+        PythonHandler django.core.handlers.modpython
+        PythonPath "['/opt/medianav',] + sys.path"
+        SetEnv DJANGO_SETTINGS_MODULE settings
+        PythonDebug Off
+    </Location>
+
+    Alias /medianav/media/ "/opt/medianav/media/"
+    <Location "/medianav/media/">
+        SetHandler None
+    </Location>
+}}}
