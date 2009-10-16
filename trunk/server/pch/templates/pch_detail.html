@@ -1,0 +1,63 @@
+<html>
+<head>
+    <link rel="StyleSheet" type="text/css" href= "/medianav/media/pch/medianav_pch.css">
+    <meta http-equiv="Content-Type" content= "text/html; charset=us-ascii">
+    <title>MediaNav Popcorn Hour Test</title>
+</head>
+<body bgproperties="fixed" background="/medianav/media/pch/pictures/background.jpg">
+    <table align="center" class="main" border="0" cellpadding="0"  cellspacing="0">
+        <tr height="30">
+            <td height="50" align="center" colspan="2">
+                <a tvid="HOME" href="/medianav/movies/popcornhour/all/1">Home</a> | 
+            </td>
+        </tr>
+
+        <tr align="left" valign="top">
+            <td width="420px"><img width="400" src="{{ MEDIA_URL }}img/movies/poster/{{ movie.moviedb_id }}.jpg"></td>
+            <td class="normal">
+                <p class="title1">{{ movie.title }} ({{ movie.year }})</p>
+                <b>Genre:</b>
+                {% for genre in movie.genres.all %}
+                {{ genre.name }}
+                {% if not forloop.last %} |{% endif %}
+                {% endfor %}
+                <br><br>
+                <b>Studio:</b>
+                {% for company in movie.production_companies.all %}
+                {{ company.name }}
+                {% if not forloop.last %} |{% endif %}
+                {% endfor %}
+                <br><br>
+                <b>Country:</b>
+                {% for country in movie.countries.all %}
+                {{ country.name }}
+                {% if not forloop.last %} |{% endif %}
+                {% endfor %}
+                <br><br>
+                <b>Overview:</b> {{ movie.plot_outline }}
+                <br><br>
+                <b>Directors:</b>
+                {% for member in directors %}
+                {{ member.person.name }}
+                {% if not forloop.last %} |{% endif %}
+                {% endfor %}
+                <br><br>
+                <b>Writers:</b>
+                {% for member in writers %}
+                {{ member.person.name }}
+                {% if not forloop.last %} |{% endif %}
+                {% endfor %}
+                <br><br>
+
+                <b>Videofile:</b>
+                {{ videodirectory.name }}/{{ videofile.name }}
+                <br>
+
+                <a class="link" href="file:///opt/sybhttpd/localhost.drives/NETWORK_SHARE/movies/{{videodirectory.name}}/{{videofile.name}}" tvid="Play" name="Play" vod=""><img src= "/medianav/media/pch/pictures/play.png" onfocussrc="/medianav/media/pch/pictures/play_selected.png"></a>
+            
+
+            </td>
+        </tr>
+    </table>
+</body>
+

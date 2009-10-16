@@ -115,4 +115,5 @@ INSTALLED_APPS = (
     'mnav',
     'tv',
     'movies',
+    'pch',
 )

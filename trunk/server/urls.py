@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     # Custom app views
     (r'^medianav/tv/', include('tv.urls')),
     (r'^medianav/movies/', include('movies.urls')),
+    (r'^medianav/pch/', include('pch.urls')),
 
     # Authentication views
     (r'^medianav/accounts/login/$', login),
