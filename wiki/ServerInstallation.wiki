@@ -7,32 +7,46 @@ STILL IN PROGRESS
 Steps to install MediaNav server
 
 apt-get install python-django (needs version 1.1), might need to download latest version from django website
+{{{
 apt-get install python-mysqldb
 apt-get install mediainfo (might only be in PPA repository)
 https://launchpad.net/~shiki/+archive/mediainfo
-
+}}}
 
 = Details =
 
-  * Configure your database
-  * If using mysql, you can do mysqladmin create medianav
-grant all privileges on medianav.* to 'medianav'@'localhost' identified by 'medianav';
-  * copy settings.py.example to settings.py Edit settings.py
+  * Configure your database, example below for MySQL:
+  * mysqladmin create medianav
+  * Create a user and give access rights 
+{{{
+mysqladmin grant all privileges on medianav.* to '<username>'@'localhost' identified by '<password>';
+}}}
+  * copy settings.py.example to settings.py 
+  * Edit settings.py
+  * Change DATABASE settings to match the above:
+{{{
+DATABASE_ENGINE = 'mysql'
+DATABASE_NAME = 'medianav'
+DATABASE_USER = '<username>'
+DATABASE_PASSWORD = '<password>'
+}}}
 
-Change DATABASE_* settings
-
-Edit MEDIANAV_TV_MEDIA = '/opt/medianav/media/img/tv';
+  * Edit 
+{{{
+MEDIANAV_TV_MEDIA = '/opt/medianav/media/img/tv';
 MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/img/movies';
+}}}
 
-Run python manage.py syncdb
+  * Run python manage.py syncdb
 
-Create tables and user
+  * Create tables and user
 
-Ok, you can now test if the webserver works
-In another window, run python manage.py runserver 0.0.0.0:8000
-(assuming you have port 8000 free)
-Then open a browser to http://yourmachine:8000/medianav/
-And see if it opens a page
+  * You can now test if the webserver works
+  * In another window, run python manage.py runserver 0.0.0.0:8000 (assuming you have port 8000 free)
+  * Then open a browser to http://yourmachine:8000/medianav/ And see if it opens a page
 
+  * Scan movie directories and associate imdb id's 
+{{{
 python manage.py movie_scan_dir all
 python manage.py movie_imdb_assoc all
+}}}
