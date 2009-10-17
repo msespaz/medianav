@@ -9,18 +9,27 @@
         <tr align="left" valign="top">
             <td>
 		{% if not is_first_page %}
-                    <a tvid="PGUP" href="/medianav/pch/all/{{prev_page}}" ONFOCUSLOAD>Up</a><br>
+                    <a tvid="PGUP" href="/medianav/pch/all/{{prev_page}}/0" ONFOCUSLOAD>Up</a><br>
 		{% endif %}
                 <ul>
                 {% for movie in movies_list %}
-                <li class="title2"><a href="/medianav/pch/detail/{{ movie.pk }}/" name="{{ movie.pk }}">{{ movie.title }} ({{ movie.year }})</a><br><br>
+                {% ifequal focus movie.pk %}
+                    <li class="title2"><a href="/medianav/pch/all/{{ page_number }}/{{ movie.pk }}/" name="{{ movie.pk }}">{{ movie.title }} ({{ movie.year }})</a><br><br>
+                    <a TVID="INFO" href="/medianav/pch/detail/{{ movie.pk }}/"></a>
+                    <a TVID="PLAY" href="{{ pch_base }}/{{videodirectory.name}}/{{videofile.name}}" vod=""></a>
+                {% else %}
+                    <li class="title2"><a href="/medianav/pch/all/{{ page_number }}/{{ movie.pk }}/" name="{{ movie.pk }}" ONFOCUSLOAD>{{ movie.title }} ({{ movie.year }})</a><br><br>
+                {% endifequal %}
                 {% endfor %}
                 </ul>
 		{% if not is_last_page %}
-                    <a tvid="PGDN" href="/medianav/pch/all/{{next_page}}" ONFOCUSLOAD>Down</a>
+                    <a tvid="PGDN" href="/medianav/pch/all/{{next_page}}/0" ONFOCUSLOAD>Down</a>
 		{% endif %}
                 <br>
             </td>
+            <td width="420px">
+                <img width="400" src="{{ MEDIA_URL }}img/movies/poster/{{ poster }}.jpg">
+            </td> 
         </tr>
     </table>
 </body>
