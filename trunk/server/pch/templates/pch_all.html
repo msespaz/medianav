@@ -5,11 +5,11 @@
     <title>MediaNav Popcorn Hour</title>
 </head>
 <body bgproperties="fixed" background="/medianav/media/pch/pictures/background.jpg" ONLOADSET="{{ focus }}">
-    <table align="center" class="main" border="0" cellpadding="0"  cellspacing="0">
+    <table align="top" class="main" border="1" cellpadding="0"  cellspacing="0">
         <tr align="center" valign="center" height="50">
             <td>
 		{% if not is_first_page %}
-                    <a tvid="PGUP" href="/medianav/pch/all/{{prev_page}}/0" ONFOCUSLOAD>Up</a><br>
+                    <a tvid="PGUP" href="/medianav/pch/all/{{prev_page}}/0" ONFOCUSLOAD>Up</a>
 		{% endif %}
             </td>
             <td colspan="2">
@@ -19,18 +19,22 @@
             </td>
         </tr>
         <tr align="left" height="400">
-            <td rowspan="3" width="60%" valign="center">
-                <ul type="none">
+            <td rowspan="3" width="50%" valign="center">
+                <table align="top" border="1" cellpadding="0" cellspacing="0" height="548">
                 {% for movie in movies_list %}
+                <tr align="left" valign="center" height="55">
+                <td valign="center">
                 {% ifequal focus movie.pk %}
-                    <li class="title2"><a TVID="PLAY" href="{{ pch_base }}/{{videodirectory.name}}/{{videofile.name}}" name="{{ movie.pk }}" VOD>{{ movie.title }} ({{ movie.year }})</a><br><br>
-                    <a TVID="INFO" href="/medianav/pch/detail/{{ movie.pk }}/"></a>
+                        <a TVID="PLAY" href="{{ pch_base }}/{{videodirectory.name}}/{{videofile.name}}" name="{{ movie.pk }}" VOD>{{ movie.title }} ({{ movie.year }})</a>
+                        <a TVID="INFO" href="/medianav/pch/detail/{{ movie.pk }}/"></a>
+
                 {% else %}
-                    <li class="title2"><a href="/medianav/pch/all/{{ page_number }}/{{ movie.pk }}/" name="{{ movie.pk }}" ONFOCUSLOAD>{{ movie.title }} ({{ movie.year }})</a><br><br>
+                    <a href="/medianav/pch/all/{{ page_number }}/{{ movie.pk }}/" name="{{ movie.pk }}" ONFOCUSLOAD>{{ movie.title }} ({{ movie.year }})</a>
                 {% endifequal %}
+                </td>
+                </tr>
                 {% endfor %}
-                </ul>
-                <br>
+                </table>
             </td>
             <td align="center" valign="top" colspan="2">
                 <img height="400" src="{{ MEDIA_URL }}img/movies/poster/h400-{{ selected.moviedb_id }}.jpg">
