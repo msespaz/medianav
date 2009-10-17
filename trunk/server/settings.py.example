@@ -102,6 +102,15 @@ MEDIANAV_TV_DIR = '/data/tv'
 MEDIANAV_MOVIE_DIR = '/data/movies/all'
 # The path for the copy_tv feature - only used for the tv_copy command
 MEDIANAV_TV_COPY_DIR = '/data/temp/copy_tv'
+# The path on the Popcornhour where the network share is mounted
+# <name> is the share as defined in Settings / Network Shares on the PCH
+#        this should point to the base directory of both MEDIANAV_TV_DIR and
+#        MEDIANAV_MOVIE_DIR (/data in the examples above)
+# <movie_dir> is the base dir of the movies collection
+# <TV_dir> is the base dir of the TV files
+MEDIANAV_PCH_MOVIE = 'file:///opt/sybhttpd/localhost.drives/NETWORK_SHARE/<name>/<movie_dir>';
+MEDIANAV_PCH_TV = 'file:///opt/sybhttpd/localhost.drives/NETWORK_SHARE/<name>/<TV_dir>';
+
 
 MEDIA_EXTENSIONS = ['.avi', '.wmv', '.iso', '.mkv', '.ts', '.mpg', '.mp4', '.m2ts', '.vob', '.divx']
 
