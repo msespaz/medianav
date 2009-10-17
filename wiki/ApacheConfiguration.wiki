@@ -20,4 +20,9 @@ Use this in your VirtualHost section to configure MediaNav to run under mod_pyth
     <Location "/medianav/media/">
         SetHandler None
     </Location>
+    Alias /medianav/admin/media/ "/usr/lib/python2.5/site-packages/django/contrib/admin/media/"
+    <Location "/medianav/admin/media/">
+        SetHandler None
+    </Location>
+
 }}}
