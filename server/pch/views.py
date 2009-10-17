@@ -38,18 +38,13 @@ def popcornhour_all(request, page_number, movie_id):
     # Set the focus to the top of the list if movie_id = 0 (the default when entering the browser)
 	# or set the focus to the select movie_id
     if int(movie_id) == 0:
-        focus = movies_list[0].pk
-        poster = movies_list[0].moviedb_id
-        plot = movies_list[0].plot_outline
-        videodirectory = movies_list[0].videodirectory_set.all()[0]
-        videofile = videodirectory.videofile_set.all()[0]
+        selected = movies_list[0] 
     else:
-        focus = int(movie_id)
-        temp = movies.models.Movie.objects.get(pk=movie_id)
-        poster = temp.moviedb_id
-        plot = temp.plot_outline
-        videodirectory = temp.videodirectory_set.all()[0]
-        videofile = videodirectory.videofile_set.all()[0]
+        selected = movies.models.Movie.objects.get(pk=movie_id)
+    
+    focus = selected.pk    
+    videodirectory = selected.videodirectory_set.all()[0]
+    videofile = videodirectory.videofile_set.all()[0]
 
     return render_to_response('pch_all.html', locals(), context_instance=RequestContext(request))
 
