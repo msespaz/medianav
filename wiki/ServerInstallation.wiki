@@ -51,3 +51,10 @@ MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/img/movies';
 python manage.py movie_scan_dir all
 python manage.py movie_imdb_assoc all
 }}}
+
+* Finally, import movie details (plot, year, actors, genre, etc) posters and backdrops:
+
+{{{
+python manage.py movie_import_imdb all
+python manage.py movie_import_tmdb all
+}}}
