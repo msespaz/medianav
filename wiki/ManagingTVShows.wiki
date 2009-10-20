@@ -21,7 +21,10 @@ Configure the TV Show pattern, in the django admin interface
 
 TV - Video File Patterns, add a new entry:
 
-re: ^(?:(?P<name>.*?)[\/\s._-]+)?(?:s|se|season|series)[\s._-]?(?P<season>\d{1,2})[x\/\s._-]*(?:e|ep|episode|[\/\s._-]+)[\s._-]?(?P<episode>\d{1,2})(?:-?(?:(?:e|ep)[\s._]*)?(?P<endep>\d{1,2}))?(?:[\s._]?(?:p|part)[\s._]?(?P<part>\d+))?(?P<subep>[a-z])?(?:[\/\s._-]*(?P<epname>[^\/]+?))?$
+re: 
+{{{
+^(?:(?P<name>.*?)[\/\s._-]+)?(?:s|se|season|series)[\s._-]?(?P<season>\d{1,2})[x\/\s._-]*(?:e|ep|episode|[\/\s._-]+)[\s._-]?(?P<episode>\d{1,2})(?:-?(?:(?:e|ep)[\s._]*)?(?P<endep>\d{1,2}))?(?:[\s._]?(?:p|part)[\s._]?(?P<part>\d+))?(?P<subep>[a-z])?(?:[\/\s._-]*(?P<epname>[^\/]+?))?$
+}}}
 priority: 100
 description: TV Show Support - SssEee or Season_ss_Episode_ss - from Video::Filename Behan Webster 
 
