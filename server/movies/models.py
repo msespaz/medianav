@@ -1,21 +1,7 @@
 from django.db import models
-
-
-from django.db.models.fields import IntegerField
+import mnav.fields
 from django.conf import settings
-
 import re
-
-# Custom big integer field
-class BigIntegerField(IntegerField):
-    empty_strings_allowed=False
-    def get_internal_type(self):
-        return "BigIntegerField"
-                        
-    def db_type(self):
-        return 'NUMBER(19)' if settings.DATABASE_ENGINE == 'oracle' else 'bigint'
-
-# Create your models here.
 
 class MovieStatus(models.Model):
     """ Things like Owned, Wish List """
@@ -174,9 +160,9 @@ class VideoFile(models.Model):
     directory = models.ForeignKey(VideoDirectory, blank=True, null=True)
     ctime = models.DateTimeField(blank=True, null=True)
     last_updated = models.DateTimeField(blank=True, null=True)
-    file_size = BigIntegerField(blank=True, null=True)
+    file_size = mnav.fields.BigIntegerField(blank=True, null=True)
     # Media Info fields
-    audio_bitrate = BigIntegerField(blank=True, null=True)
+    audio_bitrate = mnav.fields.BigIntegerField(blank=True, null=True)
     audio_channels = models.IntegerField(blank=True, null=True)
     audio_codec = models.CharField(max_length=32, blank=True)
     audio_codec_id = models.CharField(max_length=32, blank=True)
@@ -184,12 +170,12 @@ class VideoFile(models.Model):
     audio_language = models.CharField(max_length=32, blank=True)
     audio_resolution = models.IntegerField(blank=True, null=True)
     audio_samplerate = models.IntegerField(blank=True, null=True)
-    general_bitrate = BigIntegerField(blank=True, null=True)
+    general_bitrate = mnav.fields.BigIntegerField(blank=True, null=True)
     general_codec = models.CharField(max_length=32, blank=True)
     general_duration = models.IntegerField(blank=True, null=True)
     general_format = models.CharField(max_length=32, blank=True)
-    general_size = BigIntegerField(blank=True, null=True)
-    video_bitrate = BigIntegerField(blank=True, null=True)
+    general_size = mnav.fields.BigIntegerField(blank=True, null=True)
+    video_bitrate = mnav.fields.BigIntegerField(blank=True, null=True)
     video_codec = models.CharField(max_length=32, blank=True)
     video_codec_id = models.CharField(max_length=32, blank=True)
     video_displayaspect = models.FloatField(blank=True, null=True)
