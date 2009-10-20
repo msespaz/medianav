@@ -17,7 +17,10 @@ https://launchpad.net/~shiki/+archive/mediainfo
 = Details =
 
   * Configure your database, example below for MySQL:
-  * mysqladmin create medianav
+  * from the mysql shell:
+{{{
+CREATE DATABASE medianav CHARACTER SET utf8 COLLATE utf8_general_ci;
+}}}
   * Create a user and give access rights 
 {{{
 mysqladmin grant all privileges on medianav.* to '<username>'@'localhost' identified by '<password>';
