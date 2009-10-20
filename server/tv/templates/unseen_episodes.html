@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Unseen TV Episodes{% endblock %}
+
+{% block jscript %}
+$(document).ready(function() 
+    { 
+        $("#episodeTable").tablesorter(); 
+    } 
+); 
+{% endblock %}
+
+{% block content %}
+<h3>Unseen Episodes</h3>
+<button onclick='$("#episodeForm").toggleCheckboxes();'>Toggle All</button>
+<button onclick='$("#episodeForm").checkCheckboxes();'>Check All</button>
+<button onclick='$("#episodeForm").unCheckCheckboxes();'>Uncheck All</button>
+<form id="episodeForm" method="post">
+<table id="episodeTable">
+    <thead>
+    <tr>
+        <th align=left>Seen</th>
+        <th align=left>Show</th>
+        <th align=left>Ep#</th>
+        <th align=left>Airdate</th>
+        <th align=left>Name</th>
+        <th align=left>Filename</th>
+    </tr>
+    </thead>
+    <tbody>
+{% for episode in episodes %}
+    <tr class="{% cycle "odd" "even" %}">
+        <td><input type="checkbox" name="seen" value="{{episode.id}}" {% if episode.seen %}checked{% endif %} /></td>
+        <td><a href="{% url tv.views.show_detail show_id=episode.show.id %}">{{ episode.show.name }}</a></td>
+        <td>{{ episode.season_number }}x{{ episode.episode_number }}</td>
+        <td>{{ episode.first_aired }}</td>
+        <td><a href="{% url tv.views.episode_detail episode_id=episode.id %}">{{ episode.name }}</a></td>
+        <td>
+            {% for videofile in episode.videofile_set.all %}
+            <small>{{ videofile.name }}</small>
+            {% endfor %}
+        </td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+<input type="Submit" value="Update Watched Episodes" />
+</form>
+{% endblock %}

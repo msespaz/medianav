@@ -5,12 +5,14 @@ from django.template import RequestContext
 from tv.models import Show, Episode, VideoFile
 from django.core import serializers
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 import datetime
 
 
 def shows_list(request):
     return handle_shows_list(request, False)
 
+@login_required
 def favourite_list(request):
     return handle_shows_list(request, True)
 
@@ -43,7 +45,7 @@ def show_detail(request, show_id):
         for s in request.POST.getlist('seen'):
             request.user.episode_set.add(Episode.objects.get(pk=s))
 
-    # Add watched flag to episode
+    # Add watched flag to episode object so we can render it in the template
     for episode in episodes:
         if request.user in episode.seen_by.all():
             episode.seen = True
@@ -97,3 +99,19 @@ def json_episode_videofiles(request, episode_id):
     """ Returns a json result with a list of episodes for a particular show """
     videofiles = VideoFile.objects.filter(episodes__id=episode_id)
     return HttpResponse(serializers.serialize('json', videofiles, fields=('name')), content_type='application/json')
+
+@login_required
+def unseen_episodes(request):
+    """ Shows a list of episodes that have not been watched, but for which there are videofiles """
+
+    # If this is a post, update the list of seen episodes
+    # Only have to deal with marking something as seen because only unseen is shown on the list
+    if request.method == 'POST':
+        for s in request.POST.getlist('seen'):
+            request.user.episode_set.add(Episode.objects.get(pk=s))
+
+    fav_shows = request.user.show_set.all()
+    episodes = []
+    for show in fav_shows:
+        episodes += show.episode_set.filter(videofile__isnull=False).exclude(seen_by=request.user)
+    return render_to_response('unseen_episodes.html', locals(), context_instance=RequestContext(request))
