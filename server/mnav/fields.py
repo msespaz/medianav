@@ -1,4 +1,5 @@
 from django.db.models.fields import IntegerField
+from django.conf import settings
 
 class BigIntegerField(IntegerField):
     """ Defines a custom bigint field """

@@ -1,6 +1,5 @@
 from django.db import models
 import mnav.fields
-from django.conf import settings
 import re
 
 class MovieStatus(models.Model):
