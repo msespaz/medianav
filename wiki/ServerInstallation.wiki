@@ -37,6 +37,7 @@ DATABASE_PASSWORD = '<password>'
 
   * Edit 
 {{{
+MEDIA_ROOT = '/opt/medianav/media/';
 MEDIANAV_TV_MEDIA = '/opt/medianav/media/img/tv';
 MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/img/movies';
 }}}
