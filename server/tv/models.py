@@ -28,6 +28,18 @@ class Show(models.Model):
     # The users who has this show as favourite
     fav_of = models.ManyToManyField(User)
 
+    def banner_filename(self):
+        """ Returns the banner filename """
+        return "img/tv/banner/%s.jpg" % self.tvdb_showid
+
+    def poster_filename(self):
+        """ Returns the poster filename """
+        return "img/tv/poster/%s.jpg" % self.tvdb_showid
+
+    def fanart_filename(self):
+        """ Returns the fanart filename """
+        return "img/tv/fanart/%s.jpg" % self.tvdb_showid
+
     class Meta:
         ordering = ['name']
 

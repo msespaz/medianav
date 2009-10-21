@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load thumbnail %}
 
 {% block title %}{{ show.name }}{% endblock %}
 
@@ -12,12 +13,13 @@ $(document).ready(function()
 
 {% block content %}
 <div class="box">
-    <img width="758" height="140" src="{{ MEDIA_URL }}img/tv/banner/{{ show.tvdb_showid }}.jpg">
+    <a href="{{ MEDIA_URL }}{{ show.banner_filename }}"><img src="{% thumbnail show.banner_filename 758x140 %}"></a>
+
 </div>
 <div class="container">
 <div class="span-6">
     <div class="box">
-        <img width="170" height="250" src="{{ MEDIA_URL }}img/tv/poster/{{ show.tvdb_showid }}.jpg">
+        <a href="{{ MEDIA_URL }}{{ show.poster_filename }}"><img src="{% thumbnail show.poster_filename 170x250 %}"></a>
     </div>
 </div>
 <div class="span-14 last">

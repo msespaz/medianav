@@ -110,6 +110,14 @@ class Movie(models.Model):
         """ Returns a URL to the imdb page """
         return 'http://www.imdb.com/title/tt%s/' % self.imdb_id
 
+    def poster_filename(self):
+        """ Returns the poster filename """
+        return "img/movies/poster/%s.jpg" % self.moviedb_id
+
+    def backdrop_filename(self):
+        """ Returns the poster filename """
+        return "img/movies/backdrop/%s.jpg" % self.moviedb_id
+
     class Meta:
         ordering = ['title']
 

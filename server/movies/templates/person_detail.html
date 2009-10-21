@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load thumbnail %}
 
 {% block title %}Person {{ person.name }}{% endblock %}
 
@@ -6,6 +7,7 @@
 <h2>All roles by {{ person.name }}<a href="{{ person.imdb_link }}"><img src="{{ MEDIA_URL }}img/movies/logo/imdb_icon.gif"></a></h2>
 <table>
     <tr>
+        <th></th>
         <th align=left>Year</th>
         <th align=left>Movie</th>
         <th align=left>Role</th>
@@ -13,6 +15,7 @@
     </tr>
 {% for member in cast %}
     <tr class="{% cycle 'odd' 'even' %}">
+        <td><img src="{% thumbnail member.movie.poster_filename 48x70 %}"></td>
         <td>{{ member.movie.year }}</td>
         <td><a href="{% url movies.views.movie_detail movie_id=member.movie.id %}">{{ member.movie.title }}</a></td>
         <td>{{ member.job }}</td>

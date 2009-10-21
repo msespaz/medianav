@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load thumbnail %}
 
 {% block title %}Show Listing{% endblock %}
 
@@ -16,6 +17,7 @@ $(document).ready(function()
 <table id="showsTable">
     <thead>
     <tr>
+        <th></th>
         <th align=left>Fav</th>
         <th align=left>Name</th>
         <th align=left>Genre</th>
@@ -27,6 +29,7 @@ $(document).ready(function()
     <tbody>
 {% for show in shows %}
     <tr class="{% cycle 'odd' 'even' %}">
+        <td><img src="{% thumbnail show.poster_filename 48x70 %}"></td>
         <td><input type="checkbox" name="fav" value="{{show.id}}" {% if show.is_fav %}checked{% endif %} /></td>
         <td><a href="{% url tv.views.show_detail show_id=show.id %}">{{ show.name }}</a></td>
         <td>{{ show.genre }}</td>
