@@ -16,7 +16,7 @@ https://launchpad.net/~shiki/+archive/mediainfo
 
 = Details =
 
-  * Configure your database, example below for MySQL:
+  * Configure your database, example below for MySQL (database must be UTF8):
   * from the mysql shell:
 {{{
 CREATE DATABASE medianav CHARACTER SET utf8 COLLATE utf8_general_ci;
@@ -41,9 +41,13 @@ MEDIANAV_TV_MEDIA = '/opt/medianav/media/img/tv';
 MEDIANAV_MOVIES_MEDIA = '/opt/medianav/media/img/movies';
 }}}
 
-  * Run python manage.py syncdb
+  * After editing the settings.py file, run the following commands to create the tables and initial admin user:
 
-  * Create tables and user
+{{{
+python manage.py syncdb
+python manage.py migrate
+
+}}}
 
   * You can now test if the webserver works
   * In another window, run python manage.py runserver 0.0.0.0:8000 (assuming you have port 8000 free)
