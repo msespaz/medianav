@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 # For serving static pages
 from django.views import static
 
@@ -30,7 +31,7 @@ urlpatterns = patterns('',
 
     # Media - This should not be served from django, but this is useful
     # for a development server
-    (r'^medianav/media/(?P<path>.*)$', static.serve, {'document_root': 'media', 'show_indexes': True}),
+    (r'^medianav/media/(?P<path>.*)$', static.serve, {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     
     # Default page
     (r'^medianav/', include('mnav.urls')),
