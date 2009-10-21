@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load movies_extras %}
+{% load thumbnail %}
 
 {% block title %}{{ movie.title }}{% endblock %}
 
@@ -7,7 +8,7 @@
 <div class="container">
 <div class="span-6">
     <div class="box">
-        <img width="170" height="250" src="{{ MEDIA_URL }}img/movies/poster/{{ movie.moviedb_id }}.jpg">
+        <a href="{{ MEDIA_URL }}{{ movie.poster_filename}}"><img src="{% thumbnail movie.poster_filename 170x250 %}"></a>
     </div>
 </div>
 <div class="span-14 last">
@@ -73,5 +74,5 @@
     </table>
 </div>
 </div>
-<img width="480" height="270" src="{{ MEDIA_URL }}img/movies/backdrop/{{ movie.moviedb_id }}.jpg">
+<a href="{{ MEDIA_URL }}{{ movie.backdrop_filename }}"><img src="{% thumbnail movie.backdrop_filename 480x270 %}"></a>
 {% endblock %}
