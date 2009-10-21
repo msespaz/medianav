@@ -5,7 +5,7 @@
     <title>MediaNav Popcorn Hour</title>
 </head>
 <body bgproperties="fixed" background="/medianav/media/pch/pictures/background.jpg" ONLOADSET="{{ focus }}">
-    <table align="top" class="main" border="0" cellpadding="0"  cellspacing="0">
+    <table align="top" class="main" border="1" cellpadding="0"  cellspacing="0">
         <tr align="center" valign="center" height="50">
             <td>
 		{% if not is_first_page %}
@@ -14,7 +14,7 @@
             </td>
             <td colspan="2">
                 <div class="title5">
-/*                    Press <img src="{{ MEDIA_URL }}/pch/pictures/infokey.gif"> for Movie details, Enter to start movie */
+                Filtering by {{ filter_desc }}
                 </div>
             </td>
         </tr>
@@ -23,7 +23,7 @@
                 <table align="top" border="1" cellpadding="0" cellspacing="0" height="548">
                 {% for genre in genres_list %}
                 <tr align="left" valign="center" height="55">
-                <td valign="center">
+                <td valign="center" width="33%">
                 {% ifequal focus genre.pk %}
                         <a href="/medianav/pch/genre/{{ genre.pk }}/1/0" name="{{ genre.pk }}">{{ genre.name }}</a>
 
@@ -58,7 +58,7 @@
             </td>
             <td>
                 <div class="title5" align="left">
-                    Total genres: {{ total_genres }} 
+                    &nbsp; &nbsp;Total genres: {{ total_genres }} 
                 </div>
             </td>
             <td>

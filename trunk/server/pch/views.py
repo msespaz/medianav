@@ -29,12 +29,9 @@ def popcornhour_list_movies(request, page_number, movie_id, movies_selection, pr
     movies_per_page = 10
     start_movie = movies_per_page * (int(page_number)-1)
     end_movie = start_movie + movies_per_page
-#    movies_list = movies.models.Movie.objects.all()[start_movie:end_movie]
-#    total_movies =  movies.models.Movie.objects.all().count()
     movies_list = movies_selection[start_movie:end_movie]
     total_movies = movies_selection.count()
 
-    print prefix
     # Generate previous and next page_number, verify they're within range
     # is_first_page and is_last_page are used in the template to determine
     # whether or not the Up and Down links should be shown.
@@ -82,7 +79,6 @@ def popcornhour_genre_list(request, page_number, genre_id):
     total_genres = movies.models.Genre.objects.all().count()
 
     total_pages = total_genres / genres_per_page
-    print total_pages, total_genres, genres_per_page
     if total_genres % genres_per_page != 0:
         total_pages = total_pages + 1
     prev_page = int(page_number) - 1
@@ -101,4 +97,7 @@ def popcornhour_genre_list(request, page_number, genre_id):
 
     focus = selected.pk
 
-    return render_to_response('pch_genre.html', locals(), context_instance=RequestContext(request))
+    filter_desc = 'Genre'
+
+    return render_to_response('pch_filter.html', locals(), context_instance=RequestContext(request))
+
