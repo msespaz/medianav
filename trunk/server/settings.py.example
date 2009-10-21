@@ -31,6 +31,8 @@ TIME_ZONE = 'Africa/Johannesburg'
 
 # Change the following paths to match your own installation
 #
+# Absolute path to the directory that holds media.
+MEDIA_ROOT = '/opt/medianav/media/'
 # The path to your TV related images (banners, posters, fanart, etc)
 MEDIANAV_TV_MEDIA = '/opt/medianav/media/img/tv/';
 # The path to your Movie related images (posters, backdrops, etc)
@@ -80,10 +82,6 @@ USE_I18N = True
 # Login URLS
 LOGIN_URL = '/medianav/accounts/login/'
 LOGIN_REDIRECT_URL = '/medianav/'
-
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
