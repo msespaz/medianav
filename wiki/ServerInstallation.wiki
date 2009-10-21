@@ -9,7 +9,7 @@ Steps to install MediaNav server
 
 apt-get install python-django (needs version 1.1), might need to download latest version from django website
 {{{
-apt-get install python-mysqldb
+apt-get install python-mysqldb python-imaging
 apt-get install mediainfo (might only be in PPA repository)
 https://launchpad.net/~shiki/+archive/mediainfo
 }}}
