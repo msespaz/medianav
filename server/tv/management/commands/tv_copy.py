@@ -16,7 +16,7 @@ class Command(LabelCommand):
         for show in fav_shows:
             episodes = show.episode_set.filter(videofile__isnull=False).exclude(seen_by=user)
             for episode in episodes:
-                videopath = episode.videofile_set.all()[0].name
+                videopath = episode.tvvideofile_set.all()[0].name
                 videodir, videofile = os.path.split(videopath)
                 targetdirectory = os.path.join(TARGETPATH, username, videodir)
                 targetfile = os.path.join(TARGETPATH, username, videopath)

@@ -14,7 +14,7 @@
 <p>{{ episode.overview }}</p>
 
 <table>
-{% for videofile in episode.videofile_set.all %}
+{% for videofile in episode.tvvideofile_set.all %}
     <tr class="{% cycle "odd" "even" %}">
         <td><small>{{ videofile.name }}</small></td>
     </tr>

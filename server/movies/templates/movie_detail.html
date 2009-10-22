@@ -58,7 +58,7 @@
     <table> 
         {% for directory in movie.videodirectory_set.all %}
         <tr><td colspan=8>{{ directory.format_name }}</td></tr>
-            {% for file in directory.videofile_set.all %}
+            {% for file in directory.movievideofile_set.all %}
             <tr>
                 <td>[{{ forloop.counter }}]</td>
                 <td>{{ file.file_size|bytes_to_string }}</td>

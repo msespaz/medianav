@@ -64,10 +64,10 @@ def scan_directory(directory):
             print '    Found media file [%s]' % filename
             videofilenames.append(filename)
             try:
-                videofile = VideoFile.objects.get(directory = videodirectory, name = filename)
-            except VideoFile.DoesNotExist:
+                videofile = MovieVideoFile.objects.get(directory = videodirectory, name = filename)
+            except MovieVideoFile.DoesNotExist:
                 print '        Creating new file'
-                videofile = VideoFile(directory = videodirectory, name = filename)
+                videofile = MovieVideoFile(directory = videodirectory, name = filename)
                 videofile.save()
 
                 fullpath = os.path.join(directory, filename)

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.core import serializers
 from movies.models import *
 from django.db.models import Count
+from django.utils import simplejson as json
 import datetime
 import csv, cStringIO, codecs
 
@@ -111,8 +112,13 @@ def json_movie_directories(request, movie_id):
 
 def json_directory_videofiles(request, directory_id):
     """ Returns a json result with a list of episodes for a particular show """
-    videofiles = VideoFile.objects.filter(directory__id=directory_id)
-    return HttpResponse(serializers.serialize('json', videofiles, fields=('name')), content_type='application/json')
+    videofiles = MovieVideoFile.objects.filter(directory__id=directory_id)
+    ret = [ { 'pk' : v.pk,
+        'model' : 'tv.tvvideofile',
+        'fields' : { 'name' : v.name }
+        }
+        for v in videofiles ]
+    return HttpResponse(json.dumps(ret), content_type='application/json')
 
 def json_movie_detail(request, movie_id):
     movie = Movie.objects.filter(pk=movie_id)

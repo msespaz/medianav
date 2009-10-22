@@ -1,7 +1,7 @@
 from django.db import models
 import mnav.fields
 
-class VideoFile(models.Model):
+class BaseVideoFile(models.Model):
     """ A videofile model that can be used in other apps """
     name = models.CharField(max_length=1024, blank=True)
     ctime = models.DateTimeField(blank=True, null=True)
