@@ -21,6 +21,6 @@ class VideoFileAdmin(admin.ModelAdmin):
 
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Episode, EpisodeAdmin)
-admin.site.register(VideoFile, VideoFileAdmin)
+admin.site.register(TVVideoFile, VideoFileAdmin)
 admin.site.register(VideoFilePattern)
 admin.site.register(AlternateShowName, AlternateShowNameAdmin)

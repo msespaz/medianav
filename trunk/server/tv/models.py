@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
+from mnav.models import BaseVideoFile
 
 # Create your models here.
 
@@ -113,13 +114,10 @@ class Episode(models.Model):
     def __unicode__(self):
         return "s%02de%02d %s" % (self.season_number, self.episode_number, self.name)
 
-class VideoFile(models.Model):
-    name = models.CharField(max_length=1024, blank=True)
+class TVVideoFile(BaseVideoFile):
     show = models.ForeignKey(Show, blank=True, null=True)
     episodes = models.ManyToManyField(Episode)
     
     class Meta:
         ordering = ['show__name', 'name']
 
-    def __unicode__(self):
-        return self.name

@@ -5,7 +5,7 @@
 import os
 from tv.parsevideofile import parsevideofile
 from django.core.management.base import LabelCommand
-from tv.models import Show, Episode, VideoFile, AlternateShowName
+from tv.models import Show, Episode, TVVideoFile, AlternateShowName
 from django.conf import settings
 
 class Command(LabelCommand):
@@ -34,13 +34,13 @@ class Command(LabelCommand):
                 return 
         # Check if this file is already in the database
         try:
-            videofile = VideoFile.objects.get(name__iexact=name)
+            videofile = TVVideoFile.objects.get(name__iexact=name)
             if verbose: print "Updating %s" % (name,)
             videofile.name=name # Update name in case case changed
             videofile.show=show # Update show it relates to
-        except VideoFile.DoesNotExist:
+        except TVVideoFile.DoesNotExist:
             if verbose: print "Creating %s" % (name,)
-            videofile = VideoFile(name=name, show=show)
+            videofile = TVVideoFile(name=name, show=show)
             videofile.save() # Must save it before we can add many-to-many later
         # Try to match it to an episode
         # We can only do this is both season and episode numbers exist

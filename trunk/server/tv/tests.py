@@ -1,5 +1,5 @@
 import unittest
-from tv.models import Show, Episode, VideoFile
+from tv.models import Show, Episode, TVVideoFile
 
 class CoreModelTest(unittest.TestCase):
     """ Test the models contained in the 'core' app 
@@ -9,7 +9,7 @@ class CoreModelTest(unittest.TestCase):
         self.show.save()
         self.episode = Show(name="Test Episode")
         self.episode.save()
-        self.video_file = VideoFile(name="Test Video File")
+        self.video_file = TVVideoFile(name="Test Video File")
         self.video_file.save()
 
     def tearDown(self):

@@ -36,7 +36,7 @@ $(document).ready(function()
         <td>{{ episode.first_aired }}</td>
         <td><a href="{% url tv.views.episode_detail episode_id=episode.id %}">{{ episode.name }}</a></td>
         <td>
-            {% for videofile in episode.videofile_set.all %}
+            {% for videofile in episode.tvvideofile_set.all %}
             <small>{{ videofile.name }}</small>
             {% endfor %}
         </td>

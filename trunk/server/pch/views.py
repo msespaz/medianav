@@ -56,7 +56,7 @@ def popcornhour_list_movies(request, page_number, movie_id, movies_selection, pr
     
     focus = selected.pk    
     videodirectory = selected.videodirectory_set.all()[0]
-    videofile = videodirectory.videofile_set.all()[0]
+    videofile = videodirectory.movievideofile_set.all()[0]
 
     return render_to_response('pch_all.html', locals(), context_instance=RequestContext(request))
 
@@ -68,7 +68,7 @@ def popcornhour_detail(request, movie_id):
     actors = movies.models.Cast.objects.filter(movie__id=movie_id, bill_order__lt=15, job='actor').order_by('bill_order')
     writers = movies.models.Cast.objects.filter(movie__id=movie_id, bill_order__lt=15, job='writer').order_by('bill_order')
     videodirectory = movie.videodirectory_set.all()[0]
-    videofile = videodirectory.videofile_set.all()[0]
+    videofile = movievideodirectory.videofile_set.all()[0]
     return render_to_response('pch_detail.html', locals(), context_instance=RequestContext(request))
 
 def popcornhour_genre_list(request, page_number, genre_id):

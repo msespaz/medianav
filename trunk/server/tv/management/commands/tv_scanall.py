@@ -5,14 +5,14 @@
 import os
 from tv.parsevideofile import parsevideofile
 from django.core.management.base import NoArgsCommand 
-from tv.models import Show, Episode, VideoFile, AlternateShowName
+from tv.models import Show, Episode, TVVideoFile, AlternateShowName
 from django.conf import settings
 
 class Command(NoArgsCommand):
     def handle(self, **options):
         verbose = False    
         print "Scanning database"
-        for videofile in VideoFile.objects.all():
+        for videofile in TVVideoFile.objects.all():
             filename = os.path.join(settings.MEDIANAV_TV_DIR, videofile.name)
             if not os.path.isfile(filename):
                 print "File not found: %s" % filename
@@ -42,13 +42,13 @@ class Command(NoArgsCommand):
                         continue
                 # Check if this file is already in the database
                 try:
-                    videofile = VideoFile.objects.get(name__iexact=name)
+                    videofile = TVVideoFile.objects.get(name__iexact=name)
                     if verbose: print "Updating %s" % (name,)
                     videofile.name=name # Update name in case case changed
                     videofile.show=show # Update show it relates to
-                except VideoFile.DoesNotExist:
+                except TVVideoFile.DoesNotExist:
                     if verbose: print "Creating %s" % (name,)
-                    videofile = VideoFile(name=name, show=show)
+                    videofile = TVVideoFile(name=name, show=show)
                     videofile.save() # Must save it before we can add many-to-many later
                 # Try to match it to an episode
                 # We can only do this is both season and episode numbers exist

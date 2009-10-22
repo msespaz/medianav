@@ -2,10 +2,11 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
-from tv.models import Show, Episode, VideoFile
+from tv.models import Show, Episode, TVVideoFile
 from django.core import serializers
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils import simplejson as json
 import datetime
 
 
@@ -61,22 +62,23 @@ def episode_detail(request, episode_id):
 def missing_episodes(request):
     # A list of episodes for which there are no files
     # Only pulls up a list for the last year and excludes specials
-    episodes = Episode.objects.filter(season_number__gt=0, first_aired__gt=datetime.date.today()-datetime.timedelta(weeks=52), videofile__isnull=True).order_by('first_aired')
+    episodes = Episode.objects.filter(season_number__gt=0, first_aired__gt=datetime.date.today()-datetime.timedelta(weeks=52), tvvideofile__isnull=True).order_by('first_aired')
     return render_to_response('missing_episodes.html', locals(), context_instance=RequestContext(request))
 
 def json_show_episodes(request, show_id, username='all'):
     """ Returns a json result with a list of episodes for a particular show """
     if username == 'all':
-        episodes = Episode.objects.filter(show__id=show_id, videofile__isnull=False).order_by('first_aired')
+        episodes = Episode.objects.filter(show__id=show_id, tvvideofile__isnull=False).order_by('first_aired')
     else:
         user = User.objects.get(username=username)
-        episodes = Episode.objects.filter(show__id=show_id, videofile__isnull=False).exclude(seen_by=user).order_by('first_aired')
+        episodes = Episode.objects.filter(show__id=show_id, tvvideofile__isnull=False).exclude(seen_by=user).order_by('first_aired')
     return HttpResponse(serializers.serialize('json', episodes, fields=('tvdb_image','overview', 'episode_number', 'season_number', 'first_aired', 'name')), content_type='application/json')
 
 def json_episode_watched(request, username, episode_id):
-    user = User.objects.get(username=username)
     episode = Episode.objects.get(pk=episode_id)
-    user.episode_set.add(episode)
+    if username != 'all':
+        user = User.objects.get(username=username)
+        user.episode_set.add(episode)
     return HttpResponse(serializers.serialize('json', [episode]), content_type='application/json')
 
 def json_shows_list(request, username='all'):
@@ -88,7 +90,7 @@ def json_shows_list(request, username='all'):
         fav_shows = user.show_set.all()
         unseen_list = []
         for show in fav_shows:
-            number_unseen = show.episode_set.filter(videofile__isnull=False).exclude(seen_by=user).count()
+            number_unseen = show.episode_set.filter(tvvideofile__isnull=False).exclude(seen_by=user).count()
             if number_unseen > 0:
                 unseen_list.append(show.id)
         shows = Show.objects.filter(id__in=unseen_list)
@@ -97,8 +99,13 @@ def json_shows_list(request, username='all'):
 
 def json_episode_videofiles(request, episode_id):
     """ Returns a json result with a list of episodes for a particular show """
-    videofiles = VideoFile.objects.filter(episodes__id=episode_id)
-    return HttpResponse(serializers.serialize('json', videofiles, fields=('name')), content_type='application/json')
+    videofiles = TVVideoFile.objects.filter(episodes__id=episode_id)
+    ret = [ { 'pk' : v.pk,
+              'model' : 'tv.tvvideofile',
+              'fields' : { 'name' : v.name } 
+            }
+           for v in videofiles ]
+    return HttpResponse(json.dumps(ret), content_type='application/json')
 
 @login_required
 def unseen_episodes(request):
@@ -113,5 +120,5 @@ def unseen_episodes(request):
     fav_shows = request.user.show_set.all()
     episodes = []
     for show in fav_shows:
-        episodes += show.episode_set.filter(videofile__isnull=False).exclude(seen_by=request.user)
+        episodes += show.episode_set.filter(tvvideofile__isnull=False).exclude(seen_by=request.user)
     return render_to_response('unseen_episodes.html', locals(), context_instance=RequestContext(request))
