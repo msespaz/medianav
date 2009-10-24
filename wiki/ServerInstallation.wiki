@@ -54,6 +54,12 @@ python manage.py migrate
   * In another window, run python manage.py runserver 0.0.0.0:8000 (assuming you have port 8000 free)
   * Then open a browser to http://yourmachine:8000/medianav/ And see if it opens a page
 
+= Configuration =
+
+  * In the admin interface (http://yourmachine:8000/medianav/admin, it will ask you to login with the credentials you just created), go to the Sites heading. Replace the example.com entry with one appropriate for your setup, this would be the yourmachine:8000
+
+= Importing your movies =
+
   * Scan movie directories and associate imdb id's 
 {{{
 python manage.py movie_scan_dir all
