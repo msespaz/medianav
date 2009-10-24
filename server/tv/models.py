@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 from mnav.models import BaseVideoFile
+from django.conf import settings
+import os
 
 # Create your models here.
 
@@ -117,6 +119,10 @@ class Episode(models.Model):
 class TVVideoFile(BaseVideoFile):
     show = models.ForeignKey(Show, blank=True, null=True)
     episodes = models.ManyToManyField(Episode)
+
+    @property
+    def absolute_path(self):
+        return os.path.join(settings.MEDIANAV_TV_DIR, self.name)
     
     class Meta:
         ordering = ['show__name', 'name']

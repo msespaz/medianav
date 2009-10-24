@@ -9,7 +9,7 @@ import stat
 import urllib
 import re
 from movies.imdb import IMDb
-from mediainfo import parse_info
+from mnav.mediainfo import parse_info
 
 def scan_directory(directory):
     """ Scans a directory, adds it to the database with its files and associates it to a movie 

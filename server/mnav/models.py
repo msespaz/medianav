@@ -1,5 +1,9 @@
 from django.db import models
 import mnav.fields
+import os
+import stat
+import datetime
+from mnav.mediainfo import parse_info
 
 class BaseVideoFile(models.Model):
     """ A videofile model that can be used in other apps """
@@ -30,6 +34,13 @@ class BaseVideoFile(models.Model):
     video_width = models.IntegerField(blank=True, null=True)
     video_height = models.IntegerField(blank=True, null=True)
     video_scantype = models.CharField(max_length=32, blank=True)
+
+    @property
+    def absolute_path(self):
+        """ Returns the absolute path of the file 
+            Override this function when you use BaseVideoFile in another class
+        """
+        return self.name
 
     def audio_name(self):
         """ Returns a name for the audio """
@@ -127,4 +138,41 @@ class BaseVideoFile(models.Model):
     
     def __unicode__(self):
         return '%s' % (self.name)
+
+    def update_mediainfo(self, force=False):
+        """ Update the mediainfo for the videofile 
+            Note, this does not save the instance, you still have to call save() for that
+        """
+        fullpath = self.absolute_path
+        s=os.stat(fullpath)
+        if self.last_updated and (not force) and datetime.datetime.fromtimestamp(s[stat.ST_MTIME]) <= self.last_updated:
+            return False
+        self.ctime=datetime.datetime.fromtimestamp(s[stat.ST_CTIME])
+        self.file_size=s[stat.ST_SIZE]
+        self.last_updated = datetime.datetime.now()
+
+        mi = parse_info(fullpath)
+        if mi['audio_bitrate']: self.audio_bitrate = int(mi['audio_bitrate'])
+        if mi['audio_channels']: self.audio_channels = int(mi['audio_channels'])
+        self.audio_codec = mi['audio_codec']
+        self.audio_codec_id = mi['audio_codec_id']
+        self.audio_format = mi['audio_format']
+        self.audio_language = mi['audio_language']
+        if mi['audio_resolution']: self.audio_resolution = int(mi['audio_resolution']) 
+        if mi['audio_samplerate']: self.audio_samplerate = int(mi['audio_samplerate'])
+        if mi['general_bitrate']: self.general_bitrate = int(mi['general_bitrate'])
+        self.general_codec = mi['general_codec']
+        if mi['general_duration']: self.general_duration = int(mi['general_duration'])
+        self.general_format = mi['general_format']
+        if mi['general_size']: self.general_size = int(mi['general_size'])
+        if mi['video_bitrate']: self.video_bitrate = int(mi['video_bitrate'])
+        self.video_codec = mi['video_codec']
+        self.video_codec_id = mi['video_codec_id']
+        if mi['video_displayaspect']: self.video_displayaspect = float(mi['video_displayaspect'])
+        if mi['video_pixelaspect']: self.video_pixelaspect = float(mi['video_pixelaspect'])
+        self.video_format = mi['video_format']
+        if mi['video_width']: self.video_width = int(mi['video_width'])
+        if mi['video_height']: self.video_height = int(mi['video_height'])
+        self.video_scantype = mi['video_scantype']
+        return True
 

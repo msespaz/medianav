@@ -166,3 +166,7 @@ class MovieVideoFile(BaseVideoFile):
     movie = models.ForeignKey(Movie, blank=True, null=True)
     directory = models.ForeignKey(VideoDirectory, blank=True, null=True)
 
+    @property
+    def absolute_path(self):
+        return os.path.join(settings.MEDIANAV_MOVIE_DIR, self.name)
+
