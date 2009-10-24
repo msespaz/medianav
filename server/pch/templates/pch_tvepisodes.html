@@ -1,0 +1,68 @@
+{% load thumbnail %}
+<html>
+<head>
+    <link rel="StyleSheet" type="text/css" href= "/medianav/media/pch/medianav_pch.css">
+    <meta http-equiv="Content-Type" content= "text/html; charset=us-ascii">
+    <title>MediaNav Popcorn Hour</title>
+</head>
+<body bgproperties="fixed" background="/medianav/media/pch/pictures/background.jpg" ONLOADSET="{{ focus }}">
+    <a TVID="BACK" href="/medianav/pch/tv/{{ username }}/shows/1/0"></a>
+    <table align="top" class="main" border="0" cellpadding="0"  cellspacing="0">
+        <tr align="center" valign="center" height="50">
+            <td>
+		{% if not is_first_page %}
+                    <a tvid="PGUP" href="/medianav/pch/{{ prefix }}/{{ prev_page }}/0" ONFOCUSLOAD>Up</a>
+		{% endif %}
+            </td>
+            <td colspan="2">
+                <div class="title5">
+                    {{ info }}
+                </div>
+            </td>
+        </tr>
+        <tr align="left" height="400">
+            <td rowspan="2" width="50%" valign="top">
+                <table align="top" border="0" cellpadding="0" cellspacing="0" width="100%">
+                {% for entry in entries_list %}
+                <tr align="left" valign="center">
+                <td valign="center" height="55">
+                {% ifequal focus entry.pk %}
+                        <a TVID="PLAY" href="/medianav/pch/tv/{{ username }}/{{ entry.pk }}/playlist.jsp" name="{{ entry.pk }}" VOD="Playlist">{{ entry.season_number }} x {{ entry.episode_number }} : {{ entry.name }}</a>
+                {% else %}
+                    <a href="/medianav/pch/{{ prefix }}/{{ page_number }}/{{ entry.pk }}/" name="{{ entry.pk }}" ONFOCUSLOAD>{{ entry.season_number }} x {{ entry.episode_number }} : {{ entry.name }}</a>
+                {% endifequal %}
+                </td>
+                </tr>
+                {% endfor %}
+                </table>
+            </td>
+            <td align="center" valign="top" colspan="2">
+                <img src="{% thumbnail show.poster_filename 400x400 %}">
+            </td> 
+        </tr>
+        <tr height="98">
+            <td align="center" valign="top" colspan="2">
+                <div class="title4">
+                {{ selected.overview }}
+                </div>
+            </td>
+        </tr>
+        <tr align="center" valign="center" height="50">
+            <td>
+		{% if not is_last_page %}
+                    <a tvid="PGDN" href="/medianav/pch/{{ prefix }}/{{ next_page }}/0" ONFOCUSLOAD>Down</a>
+		{% endif %}
+            </td>
+            <td>
+                <div class="title5" align="left">
+                    &nbsp; &nbsp;Total episodes: {{ total_entries }} 
+                </div>
+            </td>
+            <td>
+                <div class="title5" align="right">
+                    Page: {{ page_number }} / {{ total_pages }}&nbsp; &nbsp;
+                </div>
+        </tr>
+    </table>
+</body>
+

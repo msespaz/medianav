@@ -1,0 +1,61 @@
+{% load thumbnail %}
+<html>
+<head>
+    <link rel="StyleSheet" type="text/css" href= "/medianav/media/pch/medianav_pch.css">
+    <meta http-equiv="Content-Type" content= "text/html; charset=us-ascii">
+    <title>MediaNav Popcorn Hour</title>
+</head>
+<body bgproperties="fixed" background="/medianav/media/pch/pictures/background.jpg" ONLOADSET="{{ focus }}">
+    <table align="top" class="main" border="0" cellpadding="0"  cellspacing="0">
+        <tr align="center" valign="center" height="50">
+            <td>
+		{% if not is_first_page %}
+                    <a tvid="PGUP" href="/medianav/pch/{{ prefix }}/{{ prev_page }}/0" ONFOCUSLOAD>Up</a>
+		{% endif %}
+            </td>
+            <td colspan="2">
+                <div class="title5">
+                    Press <img src="{{ MEDIA_URL }}/pch/pictures/infokey.gif"> for Movie details, Enter to start movie
+                </div>
+            </td>
+        </tr>
+        <tr align="left" height="400">
+            <td width="50%" valign="top">
+                <table align="top" border="0" cellpadding="0" cellspacing="0" width="100%">
+                {% for entry in entries_list %}
+                <tr align="left" valign="center">
+                <td valign="center" height="55">
+                {% ifequal focus entry.pk %}
+                        <a href="/medianav/pch/tv/{{ username }}/show/{{ entry.pk }}/episodes/1/0" name="{{ entry.pk }}">{{ entry.name }}</a>
+
+                {% else %}
+                    <a href="/medianav/pch/{{ prefix }}/{{ page_number }}/{{ entry.pk }}/" name="{{ entry.pk }}" ONFOCUSLOAD>{{ entry.name }}</a>
+                {% endifequal %}
+                </td>
+                </tr>
+                {% endfor %}
+                </table>
+            </td>
+            <td align="center" valign="top" colspan="2">
+                <img src="{% thumbnail selected.poster_filename 500x568 %}">
+            </td> 
+        </tr>
+        <tr align="center" valign="center" height="50">
+            <td>
+		{% if not is_last_page %}
+                    <a tvid="PGDN" href="/medianav/pch/{{ prefix }}/{{ next_page }}/0" ONFOCUSLOAD>Down</a>
+		{% endif %}
+            </td>
+            <td>
+                <div class="title5" align="left">
+                    &nbsp; &nbsp;Total shows: {{ total_entries }} 
+                </div>
+            </td>
+            <td>
+                <div class="title5" align="right">
+                    Page: {{ page_number }} / {{ total_pages }}&nbsp; &nbsp;
+                </div>
+        </tr>
+    </table>
+</body>
+
