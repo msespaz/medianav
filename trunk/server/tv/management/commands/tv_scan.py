@@ -42,6 +42,9 @@ class Command(LabelCommand):
             if verbose: print "Creating %s" % (name,)
             videofile = TVVideoFile(name=name, show=show)
             videofile.save() # Must save it before we can add many-to-many later
+        # Update mediainfo for videofile
+        if videofile.update_mediainfo():
+            print "    Updated mediainfo", videofile.name, videofile.format_name()
         # Try to match it to an episode
         # We can only do this is both season and episode numbers exist
         if ('season' in parsed) and (parsed['season'] is not None) and ('episode' in parsed) and (parsed['episode'] is not None):
