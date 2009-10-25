@@ -5,7 +5,10 @@ register = template.Library()
 @register.filter
 def msecs_to_string(value):
     """ Converts milliseconds to printable string in days, hours, minutes, seconds """
-    seconds = int(value)/1000
+    try:
+        seconds = int(value)/1000
+    except:
+        return '-'
     totalseconds = seconds
     days = seconds//86400
     seconds -= days * 86400
@@ -15,13 +18,13 @@ def msecs_to_string(value):
     seconds -= minutes * 60
     result = ''
     if totalseconds >= 86400:
-        result += '%dd ' % days
+        result += '%dd' % days
     if totalseconds >= 3600:
-        result += '%dh ' % hours
+        result += '%dh' % hours
     if totalseconds >= 60:
-        result += '%dm ' % minutes
+        result += '%dm' % minutes
     if totalseconds >= 1:
-        result += '%ds ' % seconds
+        result += '%ds' % seconds
     return result.strip()
 
 @register.filter
@@ -30,11 +33,14 @@ def bytes_to_string(value):
     kb = 1024
     mb = kb * 1024
     gb = mb * 1024
-    bytes = int(value)
+    try:
+        bytes = int(value)
+    except:
+        return '-'
     if bytes >= gb:
-        return '%.1f GB' % (float(bytes) / gb)
+        return '%.1fGB' % (float(bytes) / gb)
     if bytes >= mb:
-        return '%d MB' % (bytes / mb)
+        return '%dMB' % (bytes / mb)
     if bytes >= kb:
-        return '%d KB' % (bytes / kb)
-    return '%d B' % (bytes)
+        return '%dKB' % (bytes / kb)
+    return '%dB' % (bytes)

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load mnav %}
 
 {% block title %}{{ episode.show.name }} - {{ episode.season_number }}x{{ episode.episode_number }} - {{ episode.name }}{% endblock %}
 
@@ -11,12 +12,16 @@
     <p>(No Image)</p>
     {% endif %}
 </div>
+<b>Aired:</b> {{ episode.first_aired }}<br>
 <p>{{ episode.overview }}</p>
 
 <table>
 {% for videofile in episode.tvvideofile_set.all %}
     <tr class="{% cycle "odd" "even" %}">
         <td><small>{{ videofile.name }}</small></td>
+        <td><small>{{ videofile.general_duration|msecs_to_string }}</small></td>
+        <td><small>{{ videofile.file_size|bytes_to_string }}</small></td>
+        <td><small>{{ videofile.format_name }}</small></td>
     </tr>
 {% endfor %}
 </table>
