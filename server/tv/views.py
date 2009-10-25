@@ -62,16 +62,16 @@ def episode_detail(request, episode_id):
 def missing_episodes(request):
     # A list of episodes for which there are no files
     # Only pulls up a list for the last year and excludes specials
-    episodes = Episode.objects.filter(season_number__gt=0, first_aired__gt=datetime.date.today()-datetime.timedelta(weeks=52), tvvideofile__isnull=True).order_by('first_aired')
+    episodes = Episode.objects.filter(season_number__gt=0, first_aired__gt=datetime.date.today()-datetime.timedelta(weeks=52), tvvideofile__isnull=True).distinct().order_by('first_aired')
     return render_to_response('missing_episodes.html', locals(), context_instance=RequestContext(request))
 
 def json_show_episodes(request, show_id, username='all'):
     """ Returns a json result with a list of episodes for a particular show """
     if username == 'all':
-        episodes = Episode.objects.filter(show__id=show_id, tvvideofile__isnull=False).order_by('first_aired')
+        episodes = Episode.objects.filter(show__id=show_id, tvvideofile__isnull=False).distinct().order_by('first_aired')
     else:
         user = User.objects.get(username=username)
-        episodes = Episode.objects.filter(show__id=show_id, tvvideofile__isnull=False).exclude(seen_by=user).order_by('first_aired')
+        episodes = Episode.objects.filter(show__id=show_id, tvvideofile__isnull=False).distinct().exclude(seen_by=user).order_by('first_aired')
     return HttpResponse(serializers.serialize('json', episodes, fields=('tvdb_image','overview', 'episode_number', 'season_number', 'first_aired', 'name')), content_type='application/json')
 
 def json_episode_watched(request, username, episode_id):
@@ -90,7 +90,7 @@ def json_shows_list(request, username='all'):
         fav_shows = user.show_set.all()
         unseen_list = []
         for show in fav_shows:
-            number_unseen = show.episode_set.filter(tvvideofile__isnull=False).exclude(seen_by=user).count()
+            number_unseen = show.episode_set.filter(tvvideofile__isnull=False).distinct().exclude(seen_by=user).count()
             if number_unseen > 0:
                 unseen_list.append(show.id)
         shows = Show.objects.filter(id__in=unseen_list)
@@ -119,6 +119,16 @@ def unseen_episodes(request):
 
     fav_shows = request.user.show_set.all()
     episodes = []
+    total_duration = 0
+    total_size = 0
+    total_episodes = 0
+    total_files = 0
     for show in fav_shows:
-        episodes += show.episode_set.filter(tvvideofile__isnull=False).exclude(seen_by=request.user)
+        for episode in show.episode_set.filter(tvvideofile__isnull=False).distinct().exclude(seen_by=request.user):
+            for videofile in episode.tvvideofile_set.all():
+                if videofile.general_duration: total_duration += videofile.general_duration
+                if videofile.file_size: total_size += videofile.file_size
+                total_files += 1
+            episodes.append(episode)
+            total_episodes += 1
     return render_to_response('unseen_episodes.html', locals(), context_instance=RequestContext(request))

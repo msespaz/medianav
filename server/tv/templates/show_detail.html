@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load thumbnail %}
+{% load mnav %}
 
 {% block title %}{{ show.name }}{% endblock %}
 
@@ -40,7 +41,9 @@ $(document).ready(function()
         <th align=left>Ep#</th>
         <th align=left>Airdate</th>
         <th align=left>Name</th>
-        <th align=left>Filename</th>
+        <th align=left>Dur</th>
+        <th align=left>Size</th>
+        <th align=left>Format</th>
     </tr>
     </thead>
     <tbody>
@@ -51,11 +54,9 @@ $(document).ready(function()
         <td>{{ episode.season_number }}x{{ episode.episode_number }}</td>
         <td>{{ episode.first_aired }}</td>
         <td><a href="{% url tv.views.episode_detail episode_id=episode.id %}">{{ episode.name }}</a></td>
-        <td>
-            {% for videofile in episode.tvvideofile_set.all %}
-            <small>{{ videofile.name }}</small>
-            {% endfor %}
-        </td>
+        <td> {% for v in episode.tvvideofile_set.all %} <small>{{ v.general_duration|msecs_to_string }}</small><br> {% endfor %} </td>
+        <td> {% for v in episode.tvvideofile_set.all %} <small>{{ v.file_size|bytes_to_string }}</small><br> {% endfor %} </td>
+        <td> {% for v in episode.tvvideofile_set.all %} <small>{{ v.format_name }}</small><br> {% endfor %} </td>
     </tr>
 {% endfor %}
     </tbody>
