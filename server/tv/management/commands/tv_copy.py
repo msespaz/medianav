@@ -14,7 +14,7 @@ class Command(LabelCommand):
         fav_shows = user.show_set.all()
         unseen_list = []
         for show in fav_shows:
-            episodes = show.episode_set.filter(videofile__isnull=False).exclude(seen_by=user)
+            episodes = show.episode_set.filter(tvvideofile__isnull=False).exclude(seen_by=user)
             for episode in episodes:
                 videopath = episode.tvvideofile_set.all()[0].name
                 videodir, videofile = os.path.split(videopath)
