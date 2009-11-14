@@ -23,6 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 from copy import deepcopy
 
+from imdb import articles
 from imdb.utils import analyze_title, build_title, canonicalTitle, \
                         flatten, _Container, cmpMovies
 
@@ -93,6 +94,8 @@ class Movie(_Container):
                 'aka':  'akas',
                 'also known as':    'akas',
                 'country':  'countries',
+                'production country':  'countries',
+                'production countries':  'countries',
                 'genre': 'genres',
                 'runtime':  'runtimes',
                 'lang': 'languages',
@@ -180,12 +183,39 @@ class Movie(_Container):
         addkeys = []
         if self.data.has_key('title'):
             addkeys += ['canonical title', 'long imdb title',
-                        'long imdb canonical title']
+                        'long imdb canonical title',
+                        'smart canonical title',
+                        'smart long imdb canonical title']
         if self.data.has_key('episode of'):
             addkeys += ['long imdb episode title', 'series title',
                         'canonical series title', 'episode title',
-                        'canonical episode title']
+                        'canonical episode title',
+                        'smart canonical series title',
+                        'smart canonical episode title']
         return addkeys
+
+    def guessLanguage(self):
+        """Guess the language of the title of this movie; returns None
+        if there are no hints."""
+        lang = self.get('languages')
+        if lang:
+            lang = lang[0]
+        else:
+            country = self.get('countries')
+            if country:
+                lang = articles.COUNTRY_LANG.get(country[0])
+        return lang
+
+    def smartCanonicalTitle(self, title=None, lang=None):
+        """Return the canonical title, guessing its language.
+        The title can be forces with the 'title' argument (internally
+        used) and the language can be forced with the 'lang' argument,
+        otherwise it's auto-detected."""
+        if title is None:
+            title = self.data.get('title', u'')
+        if lang is None:
+            lang = self.guessLanguage()
+        return canonicalTitle(title, lang=lang)
 
     def _getitem(self, key):
         """Handle special keys."""
@@ -197,10 +227,15 @@ class Movie(_Container):
             elif key == 'canonical series title':
                 ser_title = self.data['episode of']['title']
                 return canonicalTitle(ser_title)
+            elif key == 'smart canonical series title':
+                ser_title = self.data['episode of']['title']
+                return self.smartCanonicalTitle(ser_title)
             elif key == 'episode title':
                 return self.data.get('title', u'')
             elif key == 'canonical episode title':
                 return canonicalTitle(self.data.get('title', u''))
+            elif key == 'smart canonical episode title':
+                return self.smartCanonicalTitle(self.data.get('title', u''))
         if self.data.has_key('title'):
             if key == 'title':
                 return self.data['title']
@@ -208,8 +243,13 @@ class Movie(_Container):
                 return build_title(self.data)
             elif key == 'canonical title':
                 return canonicalTitle(self.data['title'])
+            elif key == 'smart canonical title':
+                return self.smartCanonicalTitle(self.data['title'])
             elif key == 'long imdb canonical title':
                 return build_title(self.data, canonical=1)
+            elif key == 'smart long imdb canonical title':
+                return build_title(self.data, canonical=1,
+                                    lang=self.guessLanguage())
         return None
 
     def getID(self):

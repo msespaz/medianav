@@ -239,7 +239,7 @@ class DOMHTMLMovieParser(DOMParserBase):
                             # Collects akas not encosed in <i> tags.
                             Attribute(key='other akas',
                                 path="./h5[starts-with(text(), " \
-                                        "'Also Known As')]/../text()",
+                                        "'Also Known As')]/../p/text()",
                                 postprocess=makeSplitter(sep='::')),
                             Attribute(key='runtimes',
                                 path="./h5[starts-with(text(), " \
@@ -335,17 +335,14 @@ class DOMHTMLMovieParser(DOMParserBase):
                         path="../ul/li",
                         attrs=Attribute(key=None,
                                 multi=True,
-                                path={'text': ".//text()",
-                                        'comp-link': "./a/@href"},
+                                path={'name': "./a//text()",
+                                        'comp-link': "./a/@href",
+                                        'notes': "./text()"},
                                 postprocess=lambda x: \
-                                        Company(name=x.get('text', u''),
-                                companyID=analyze_imdbid(x.get('comp-link')))
+                                        Company(name=x.get('name') or u'',
+                                companyID=analyze_imdbid(x.get('comp-link')),
+                                notes=(x.get('notes') or u'').strip())
                             )),
-
-                #Extractor(label='votes and rating',
-                #        path="//div[@class='general rating']",
-                #        attrs=Attribute(key='votes and rating',
-                #                        path=".//text()")),
 
                 Extractor(label='votes and rating',
                         path="//div[@class='meta']",
@@ -404,7 +401,10 @@ class DOMHTMLMovieParser(DOMParserBase):
                         obj.accessSystem = self._as
                         obj.modFunct = self._modFunct
         if 'akas' in data or 'other akas' in data:
-            data['akas'] = data.get('other akas', []) + data.get('akas', [])
+            other_akas = data.get('akas')
+            if not other_akas:
+                other_akas = []
+            data['akas'] = data.get('other akas', []) + other_akas
             if 'other akas' in data:
                 del data['other akas']
         if 'runtimes' in data:
@@ -811,7 +811,6 @@ class DOMHTMLQuotesParser(DOMParserBase):
     """
     _defGetRefs = True
 
-    # FIXME: it still contains too many ::
     extractors = [
         Extractor(label='quotes',
             path="//div[@class='_imdbpy']",
@@ -827,6 +826,9 @@ class DOMHTMLQuotesParser(DOMParserBase):
             r'\1<div class="_imdbpy">'),
         (re.compile('<hr width="30%">', re.I), '</div>'),
         (re.compile('<hr/>', re.I), '</div>'),
+        (re.compile('<script.*?</script>', re.I|re.S), ''),
+        # For BeautifulSoup.
+        (re.compile('<!-- sid: t-channel : MIDDLE_CENTER -->', re.I), '</div>')
         ]
 
     def postprocess_data(self, data):
@@ -1323,6 +1325,8 @@ class DOMHTMLNewsParser(DOMParserBase):
                 path={
                     'title': "./text()",
                     'fromdate': "../following-sibling::p[1]/small//text()",
+                    # FIXME: sometimes (see The Matrix (1999)) <p> is found
+                    #        inside news text.
                     'body': "../following-sibling::p[2]//text()",
                     'link': "../..//a[text()='Permalink']/@href",
                     'fulllink': "../..//a[starts-with(text(), " \
@@ -1333,7 +1337,7 @@ class DOMHTMLNewsParser(DOMParserBase):
                     'date': x.get('fromdate').split('|')[0].strip(),
                     'from': x.get('fromdate').split('|')[1].replace('From ',
                             '').strip(),
-                    'body': x.get('body').strip(),
+                    'body': (x.get('body') or u'').strip(),
                     'link': _normalize_href(x.get('link')),
                     'full article link': _normalize_href(x.get('fulllink'))
                 }))
@@ -1670,7 +1674,6 @@ class DOMHTMLFaqsParser(DOMParserBase):
     _defGetRefs = True
 
     # XXX: bsoup and lxml don't match (looks like a minor issue, anyway).
-    # FIXME: remove the :: ?
 
     extractors = [
         Extractor(label='faqs',

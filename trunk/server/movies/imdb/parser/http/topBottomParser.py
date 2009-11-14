@@ -39,20 +39,18 @@ class DOMHTMLTop250Parser(DOMParserBase):
         result = tparser.parse(top250_html_string)
     """
     label = 'top 250'
-    h1text = 'Top 250'
     ranktext = 'top 250 rank'
 
     def _init(self):
         self.extractors = [Extractor(label=self.label,
-                        path="//table//h1[starts-with(text(), '" + \
-                                self.h1text + "')]/..//tr[@valign]",
+                        path="//div[@id='main']//table//tr",
                         attrs=Attribute(key=None,
                                 multi=True,
                                 path={self.ranktext: "./td[1]//text()",
                                         'rating': "./td[2]//text()",
                                         'title': "./td[3]//text()",
                                         'movieID': "./td[3]//a/@href",
-                                        'votes': "./td[4]//text()",
+                                        'votes': "./td[4]//text()"
                                         }))]
 
     def postprocess_data(self, data):
@@ -60,6 +58,9 @@ class DOMHTMLTop250Parser(DOMParserBase):
             return []
         mlist = []
         data = data[self.label]
+        # Avoid duplicates.  A real fix, using XPath, is auspicabile.
+        # XXX: probably this is no more needed.
+        seenIDs = []
         for d in data:
             if 'movieID' not in d: continue
             if self.ranktext not in d: continue
@@ -68,6 +69,9 @@ class DOMHTMLTop250Parser(DOMParserBase):
             if theID is None:
                 continue
             theID = str(theID)
+            if theID in seenIDs:
+                continue
+            seenIDs.append(theID)
             minfo = analyze_title(d['title'])
             try: minfo[self.ranktext] = int(d[self.ranktext].replace('.', ''))
             except: pass
@@ -92,7 +96,6 @@ class DOMHTMLBottom100Parser(DOMHTMLTop250Parser):
         result = tparser.parse(bottom100_html_string)
     """
     label = 'bottom 100'
-    h1text = 'Bottom 100'
     ranktext = 'bottom 100 rank'
 
 
