@@ -4,7 +4,7 @@ imdb package.
 This package can be used to retrieve information about a movie or
 a person from the IMDb database.
 It can fetch data through different media (e.g.: the IMDb web pages,
-a local installation, a SQL database, etc.)
+a SQL database, etc.)
 
 Copyright 2004-2009 Davide Alberani <da@erlug.linux.it>
 
@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 __all__ = ['IMDb', 'IMDbError', 'Movie', 'Person', 'Character', 'Company',
             'available_access_systems']
-__version__ = VERSION = '4.1'
+__version__ = VERSION = '4.3svn20091112'
 
 # Import compatibility module (importing it is enough).
 import _compat
@@ -172,11 +172,8 @@ def IMDb(accessSystem=None, *arguments, **keywords):
         from parser.mobile import IMDbMobileAccessSystem
         return IMDbMobileAccessSystem(*arguments, **keywords)
     elif accessSystem in ('local', 'files'):
-        try:
-            from parser.local import IMDbLocalAccessSystem
-        except ImportError:
-            raise IMDbError, 'the local access system is not installed'
-        return IMDbLocalAccessSystem(*arguments, **keywords)
+        # The local access system was removed since IMDbPY 4.2.
+        raise IMDbError, 'the local access system was removed since IMDbPY 4.2'
     elif accessSystem in ('sql', 'db', 'database'):
         try:
             from parser.sql import IMDbSqlAccessSystem
@@ -200,11 +197,6 @@ def available_access_systems():
     try:
         from parser.mobile import IMDbMobileAccessSystem
         asList.append('mobile')
-    except ImportError:
-        pass
-    try:
-        from parser.local import IMDbLocalAccessSystem
-        asList.append('local')
     except ImportError:
         pass
     try:
@@ -693,7 +685,10 @@ class IMDbBase:
             info = (info,)
         res = {}
         for i in info:
-            if i in mop.current_info and not override: continue
+            if i in mop.current_info and not override:
+                continue
+            if not i:
+                continue
             try:
                 method = getattr(aSystem, 'get_%s_%s' %
                                     (prefix, i.replace(' ', '_')))
@@ -750,7 +745,7 @@ class IMDbBase:
 
     def _searchIMDb(self, kind, ton):
         """Search the IMDb akas server for the given title or name."""
-        # The Exact Primary search system is gone AWL, so we resort
+        # The Exact Primary search system has gone AWOL, so we resort
         # to the mobile search. :-/
         if not ton:
             return None

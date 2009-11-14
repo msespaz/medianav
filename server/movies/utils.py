@@ -163,7 +163,7 @@ def import_imdb(id):
         mm.imdb_votes = mi['votes']
         if mi.has_key('mpaa'):
             mm.mpaa = mi['mpaa']
-        if mi.has_key('runtimes'):
+        if mi.has_key('runtimes') and mi['runtimes']:
             mm.runtime = int(re.sub('[^0-9]+', '', mi['runtimes'][0])) # Pick the first runtime
 
         if mi.has_key('imdbIndex'):
