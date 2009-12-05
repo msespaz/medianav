@@ -1,0 +1,9 @@
+#summary Installing the MediaNav Client
+
+= Requirements =
+Assuming an Ubuntu 9.10 desktop installation as the starting point, you'll need to add the following packages:
+  * mplayer-nogui
+  * lirc
+  * python-pygame
+  * python-pylirc
+
