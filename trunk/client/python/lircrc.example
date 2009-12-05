@@ -1,0 +1,170 @@
+# Up
+begin
+prog = pyhtpc
+button = Up
+repeat = 1
+config = UP
+end
+
+# Down
+begin
+prog = pyhtpc
+button = Down
+repeat = 1
+config = DOWN
+end
+
+# PageUp
+begin
+prog = pyhtpc
+button = ChanUp
+repeat = 3
+config = PGUP
+end
+
+# PageDown
+begin
+prog = pyhtpc
+button = ChanDown
+repeat = 3
+config = PGDOWN
+end
+
+# Left
+begin
+prog = pyhtpc
+button = Left
+repeat = 3
+config = LEFT
+end
+
+# Right
+begin
+prog = pyhtpc
+button = Right
+repeat = 3
+config = RIGHT
+end
+
+# Back
+begin
+prog = pyhtpc
+button = Back
+repeat = 3
+config = BACK
+end
+
+# Select
+begin
+prog = pyhtpc
+button = OK
+repeat = 3
+config = SELECT
+end
+
+# cycle user
+begin
+prog = pyhtpc
+button = LiveTV 
+repeat = 3
+config = LIVETV 
+end
+
+
+# Quit
+begin
+prog = pyhtpc
+button = Power
+repeat = 3
+config = QUIT
+end
+# Show OSD
+begin
+prog = mplayer
+button = More
+repeat = 3
+config = osd
+end
+
+# Pause playback
+begin
+prog = mplayer
+button = Pause
+repeat = 3
+config = pause
+end
+
+# Skip ahead a minute if playing
+# If paused, resume playing
+begin
+prog = mplayer
+button = Play
+repeat = 3
+config = seek +1
+end
+
+# Stop playback and exit
+begin
+prog = mplayer
+button = Stop
+repeat = 3
+config = quit
+end
+
+# Mute
+begin
+prog = mplayer
+button = Mute
+repeat = 3
+config = mute
+end
+
+# Seek back 10 seconds
+begin
+prog = mplayer
+button = Rewind
+repeat = 3
+config = seek -10
+end
+
+# Seek forward 30 seconds
+begin
+prog = mplayer
+button = Forward
+repeat = 3
+config = seek +30
+end
+
+# Quit
+begin
+prog = mplayer
+button = Back
+repeat = 3
+config = quit
+end
+
+# Seek forward 10 minutes
+begin
+prog = mplayer
+button = Skip
+repeat = 3
+config = seek +600
+end
+
+# Seek backward 10 minutes
+begin
+prog = mplayer
+button = Replay
+repeat = 3
+config = seek -600
+end
+
+# Toggle full-screen
+begin
+prog = mplayer
+button = Home
+repeat = 3
+config = vo_fullscreen
+end
+
+
