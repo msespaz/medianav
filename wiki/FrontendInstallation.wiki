@@ -7,3 +7,7 @@ Assuming an Ubuntu 9.10 desktop installation as the starting point, you'll need 
   * python-pygame
   * python-pylirc
 
+= Setting up the client =
+  # Rename the medianav.cfg.linux to medianav.cfg and modify it
+  # Copy lircrc.example to $HOME/.lircrc, the provided example works fine with Windows MCE remotes, if yours is a different make, you may need to modify the controls
+  # 
