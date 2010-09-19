@@ -99,7 +99,7 @@ class Episode(models.Model):
 
     def newzbin_url(self):
         # Returns a url to search for the episode on newzbin
-        return "http://v3.newzbin.com/search/query/?q=%s+%dx%02d&area=-1&fpn=p&searchaction=Go&areadone=-1" % (self.show.name.lower().replace(' ','+').replace('&',''), self.season_number, self.episode_number)
+        return "http://www.newzbin.com/search/query/?q=%s+%dx%02d&area=-1&fpn=p&searchaction=Go&areadone=-1" % (self.show.name.lower().replace(' ','+').replace('&',''), self.season_number, self.episode_number)
 
     def air_status(self):
         # Returns if this episode has aired already
