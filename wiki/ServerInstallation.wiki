@@ -5,13 +5,22 @@
 
 STILL IN PROGRESS
 
-Steps to install MediaNav server
+Steps to install MediaNav server on Ubuntu 10.04
 
-apt-get install python-django (needs version 1.1), might need to download latest version from django website
+First add the repository for mediainfo:
+
 {{{
+sudo add-apt-repository ppa:shiki/mediainfo
+sudo apt-get update
+}}}
+
+Install the packages:
+
+{{{
+apt-get install python-django
 apt-get install python-mysqldb python-imaging
-apt-get install mediainfo (might only be in PPA repository)
-https://launchpad.net/~shiki/+archive/mediainfo
+apt-get install python-imdbpy
+apt-get install mediainfo # This is in the launchpad PPA repository https://launchpad.net/~shiki/+archive/mediainfo
 }}}
 
 = Details =
