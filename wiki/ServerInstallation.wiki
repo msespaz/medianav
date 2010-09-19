@@ -17,7 +17,8 @@ sudo apt-get update
 Install the packages:
 
 {{{
-apt-get install python-django
+apt-get install mysql-server
+apt-get install python-django # Needs at least v1.1
 apt-get install python-mysqldb python-imaging
 apt-get install python-imdbpy
 apt-get install mediainfo # This is in the launchpad PPA repository https://launchpad.net/~shiki/+archive/mediainfo
