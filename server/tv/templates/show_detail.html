@@ -56,7 +56,7 @@ $(document).ready(function()
         <td><a href="{% url tv.views.episode_detail episode_id=episode.id %}">{{ episode.name }}</a></td>
         <td> {% for v in episode.tvvideofile_set.all %} <small>{{ v.general_duration|msecs_to_string }}</small><br> {% endfor %} </td>
         <td> {% for v in episode.tvvideofile_set.all %} <small>{{ v.file_size|bytes_to_string }}</small><br> {% endfor %} </td>
-        <td> {% for v in episode.tvvideofile_set.all %} <small>{{ v.format_name }}</small><br> {% endfor %} </td>
+        <td> {% for v in episode.tvvideofile_set.all %} <small>{{ v.format_name }} - {{ v.audio_bitrate }} </small><br> {% endfor %} </td>
     </tr>
 {% endfor %}
     </tbody>

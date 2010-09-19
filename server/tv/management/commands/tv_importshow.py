@@ -57,11 +57,11 @@ def import_show(show_id):
             #update = 0
             #update_fields = ""
             try:
-                print "Update: s%02de%02d %s" % (int(tvdbepisode.season_number), int(tvdbepisode.episode_number), tvdbepisode.name)
+                print "Update: s%02de%02d %s" % (int(tvdbepisode.season_number), int(tvdbepisode.episode_number), tvdbepisode.name.encode('latin-1', 'ignore'))
                 episode = Episode.objects.get(tvdb_episodeid=tvdbepisode.id)
             except Episode.DoesNotExist:
                 episode = Episode(tvdb_episodeid=tvdbepisode.id)
-                print "Create: s%02de%02d %s" % (int(tvdbepisode.season_number), int(tvdbepisode.episode_number), tvdbepisode.name)
+                print "Create: s%02de%02d %s" % (int(tvdbepisode.season_number), int(tvdbepisode.episode_number), tvdbepisode.name.encode('latin-1', 'ignore'))
             #if episode.show != show:
             #    update = 1
             #    update_fields += " show"
