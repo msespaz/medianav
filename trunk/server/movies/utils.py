@@ -270,10 +270,9 @@ def import_tmdb(imdbid):
         this is only used to fill in a few extra fields and to get
         the poster and backdrop images """
     tmdb = themoviedb.TheMovieDB(settings.TMDBAPI_KEY)
-    try:
-        tmdbmovie = tmdb.movie_imdblookup('tt' + imdbid)
-    except:
-        print "Error retrieving data from tmdb"
+    tmdbmovie = tmdb.movie_imdblookup('tt' + imdbid)
+    if tmdbmovie is None:
+        print "No TMDb result found for ", imdbid
         return
     try:
         movie = Movie.objects.get(imdb_id = imdbid)
@@ -306,7 +305,7 @@ def import_tmdb(imdbid):
         if movie.moviedb_backdrop_url:
             filename = "%s/backdrop/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
             if not os.access(filename, os.F_OK):
-                print "Downloading backdsrop image to %s" % (filename)
+                print "Downloading backdrop image to %s" % (filename)
                 urllib.urlretrieve(movie.moviedb_backdrop_url, filename)
     else:
         print 'No tmdb match found'
@@ -393,6 +392,6 @@ def import_tmdb_old(id):
         urllib.urlretrieve(movie.moviedb_poster_url, filename)
     filename = "%s/backdrop/%s.jpg" % (settings.MEDIANAV_MOVIES_MEDIA, movie.moviedb_id)
     if not os.access(filename, os.F_OK):
-        print "Downloading backdsrop image to %s" % (filename)
+        print "Downloading backdrop image to %s" % (filename)
         urllib.urlretrieve(movie.moviedb_backdrop_url, filename)
 

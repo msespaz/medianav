@@ -21,7 +21,7 @@ class TheMovieDB(object):
             self.type = node.get('type')
             self.url = node.get('url')
             self.name = node.get('name')
-            self.id = int(self.url.split('/')[-1])
+            self.id = int(node.get('id'))
 
     class Studio(object):
         def __init__(self, node):
@@ -71,33 +71,37 @@ class TheMovieDB(object):
             self.categories = []
             if node.find('categories'):
                 for n in node.find('categories'):
-                    self.categories.append(TheMovieDB.Category(n)) 
+                    self.categories.append(TheMovieDB.Category(n))
             self.studios = []
             if node.find('studios'):
                 for n in node.find('studios'):
-                    self.studios.append(TheMovieDB.Studio(n)) 
+                    self.studios.append(TheMovieDB.Studio(n))
             self.countries = []
             if node.find('countries'):
                 for n in node.find('countries'):
-                    self.countries.append(TheMovieDB.Country(n)) 
+                    self.countries.append(TheMovieDB.Country(n))
             self.images = []
             if node.find('images'):
                 for n in node.find('images'):
-                    self.images.append(TheMovieDB.Image(n)) 
+                    self.images.append(TheMovieDB.Image(n))
             self.cast = []
             if node.find('cast'):
                 for n in node.find('cast'):
-                    self.cast.append(TheMovieDB.Person(n)) 
+                    self.cast.append(TheMovieDB.Person(n))
 
     def movie_getinfo(self, movie_id):
         tree = self.tmdb_method('Movie.getInfo', movie_id)
-        movie_node = tree.find('movies')[0]
+	movie_node = tree.find('movies')[0]
         return TheMovieDB.Movie(movie_node)
-    
+
     def movie_imdblookup(self, imdb_id):
         tree = self.tmdb_method('Movie.imdbLookup', imdb_id)
-        movie_node = tree.find('movies')[0]
-        return TheMovieDB.Movie(movie_node)
+        movie_node = tree.find('movies')
+        if len(movie_node) > 0:
+            return TheMovieDB.Movie(movie_node[0])
+        else:
+            return None
+
 
     def movie_search(self, title):
         results = []
