@@ -1,7 +1,5 @@
 from django.core.management.base import LabelCommand
-from movies.utils import import_imdb, scan_directory
 from movies.models import Movie, VideoDirectory
-from movies.imdb import IMDb
 from django.conf import settings
 import os
 
