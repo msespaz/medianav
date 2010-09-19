@@ -8,7 +8,7 @@ import os
 import stat
 import urllib
 import re
-from movies.imdb import IMDb
+from imdb import IMDb
 from mnav.mediainfo import parse_info
 
 def scan_directory(directory):
