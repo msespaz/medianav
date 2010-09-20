@@ -9,7 +9,7 @@ class Command(LabelCommand):
     def handle_label(sself, label, **options):
         """ Searches for an imdb movie by title for all directories without an associated movie """
         dirs = VideoDirectory.objects.filter(movie__id__isnull=True)
-        imdb = IMDb('http', useModule='BeautifulSoup')
+        imdb = IMDb()
         for dir in dirs:
             name = dir.name.split(')')[0]+')'
             print '-'*20
