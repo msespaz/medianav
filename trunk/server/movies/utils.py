@@ -132,7 +132,7 @@ def find_or_create_person(pi):
 
 def import_imdb(id):
     """ Import a movie from IMDB """
-    imdb = IMDb('http', useModule='BeautifulSoup')
+    imdb = IMDb()
     print 'Importing from imdb', id
     mi=imdb.get_movie(id) # mi is the movie from imdb
     if mi:
